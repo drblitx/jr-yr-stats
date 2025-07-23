@@ -19,13 +19,29 @@ def merge_season_stats(year_dir, output_dir='data/cleaned'):
     for i, file in enumerate(csv_files):
         path = os.path.join(year_dir, file)
         df = pd.read_csv(path)
+
+        if 'result' in df.columns:
+            result_split = df['result'].str.extract(r'^(W|L|T)\s+(\d-\d)$')
+            df['result'] = result_split[0]
+            df['set_result'] = result_split[1]
+            df['set_diff'] = (
+                df['set_result']
+                .str.extract(r'(\d)-(\d)')
+                .astype(float)
+                .apply(lambda x: x[0] - x[1], axis=1)
+            )
+
         df['match_number'] = df.groupby('date').cumcount() + 1
         cols = df.columns.tolist()
-        if 'match_number' in cols:
-            cols.remove('match_number')
-            date_index = cols.index('date')
-            cols.insert(date_index + 1, 'match_number')
-            df = df[cols]
+
+        for col in ['match_number', 'result', 'set_result', 'set_diff']:
+            if col in cols:
+                cols.remove(col)
+                date_index = cols.index('date')
+                cols.insert(date_index + 1, col)
+
+        df = df[cols]
+
         if i != 0 and 'result' in df.columns:
             df = df.drop(columns=['result'])
         dfs.append(df)
@@ -42,6 +58,10 @@ def merge_season_stats(year_dir, output_dir='data/cleaned'):
     merged.to_csv(output_path, index=False)
     print(f"Saved merged file to {output_path}")
 
-    return merged
+def add_derived_features(df, season_label, season_year):
+    pass
 
-merged = merge_season_stats("data/raw/freshman")
+
+dirs = ['freshman', 'sophomore', 'senior']
+for dir in dirs:
+    merge_season_stats(f"data/raw/{dir}")
