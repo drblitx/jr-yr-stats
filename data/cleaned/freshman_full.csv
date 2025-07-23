@@ -1,35 +1,35 @@
-date,match_number,result,opponent,sets_played,kills,kills_per_set,kill_pct,kill_att,kill_err,hit_pct,assists,assists_per_set,ball_handling_att,ball_handling_err,solo_blks,assisted_blks,total_blks,blks_per_set,blk_err,digs,dig_err,digs_per_set,receiving,receiving_err,recieving_per_set,aces,aces_per_set,ace_pct,serve_att,serve_err,serve_pct,points
-09/01,1,W 3-0,Takoma Academy,3,5,1.7,20.0,25,6,-0.04,0,0.0,0,0,0,0,0,0.0,0,7,0,2.3,13,2,4.3,6,2.0,40.0,15,2,86.7,0
-09/09,1,W 2-0,River City Science Academy,2,6,3.0,42.9,14,1,0.357,0,0.0,0,0,1,0,1,0.5,0,5,0,2.5,13,0,6.5,2,1.0,33.3,6,0,100.0,0
-09/09,2,W 2-0,Interlachen,2,3,1.5,16.7,18,3,0.0,0,0.0,0,0,1,0,1,0.5,0,10,0,5.0,8,2,4.0,4,2.0,50.0,8,0,100.0,0
-09/09,3,W 2-0,Florida School for the Deaf & Blind,2,3,1.5,20.0,15,4,-0.067,0,0.0,0,0,1,0,1,0.5,0,4,0,2.0,12,2,6.0,5,2.5,62.5,8,0,100.0,0
-09/17,1,W 3-0,Alabama School for the Deaf,3,11,3.7,44.0,25,6,0.2,0,0.0,0,0,0,0,0,0.0,0,10,0,3.3,12,0,4.0,2,0.7,22.2,9,1,88.9,0
-09/20,1,W 3-0,Smith Jewish Day School,3,7,2.3,31.8,22,3,0.182,1,0.3,0,0,0,0,0,0.0,0,12,0,4.0,12,1,4.0,3,1.0,37.5,8,0,100.0,0
-09/22,1,W 3-0,Riverdale Baptist,3,5,1.7,45.5,11,1,0.364,0,0.0,0,0,0,0,0,0.0,0,19,0,6.3,16,3,5.3,2,0.7,20.0,10,1,90.0,0
-09/24,1,L 0-2,Islamic Saudi Academy,2,1,0.5,11.1,9,3,-0.222,2,1.0,0,0,0,0,0,0.0,0,4,0,2.0,11,2,5.5,0,0.0,0.0,3,1,66.7,0
-09/24,2,W 2-0,Sidwell Friends,2,3,1.5,16.7,18,2,0.056,0,0.0,0,0,0,0,0,0.0,0,10,0,5.0,10,1,5.0,1,0.5,50.0,2,0,100.0,0
-09/24,3,L 0-2,Jackson-Reed,2,4,2.0,25.0,16,6,-0.125,0,0.0,0,0,0,0,0,0.0,0,2,0,1.0,4,0,2.0,2,1.0,50.0,4,0,100.0,0
-09/24,4,W 2-1,Sidwell Friends,3,6,2.0,42.9,14,0,0.429,1,0.3,0,0,0,0,0,0.0,0,6,0,2.0,8,1,2.7,0,0.0,0.0,4,2,50.0,0
-10/04,1,W 3-0,Oakcrest,3,11,3.7,50.0,22,2,0.409,0,0.0,0,0,1,0,1,0.3,0,12,0,4.0,7,4,2.3,5,1.7,50.0,10,1,90.0,0
-10/07,1,L 0-2,Maryland School for the Deaf,2,3,1.5,15.0,20,4,-0.05,0,0.0,0,0,0,1,1,0.5,0,2,0,1.0,10,1,5.0,0,0.0,0.0,3,0,100.0,0
-10/07,2,W 2-1,California School for the Deaf-Riverside,3,6,2.0,28.6,21,3,0.143,0,0.0,0,0,0,0,0,0.0,0,9,0,3.0,7,2,2.3,1,0.3,8.3,12,0,100.0,0
-10/07,3,L 0-2,Texas School for the Deaf,2,2,1.0,15.4,13,3,-0.077,0,0.0,0,0,0,0,0,0.0,0,11,0,5.5,9,3,4.5,0,0.0,0.0,2,2,0.0,0
-10/07,4,L 1-2,California School for the Deaf,3,3,1.0,21.4,14,2,0.071,0,0.0,0,0,0,1,1,0.3,0,2,0,0.7,16,4,5.3,0,0.0,0.0,5,1,80.0,0
-10/08,1,L 0-2,Indiana School for the Deaf,2,2,1.0,15.4,13,2,0.0,0,0.0,0,0,0,0,0,0.0,0,3,0,1.5,10,4,5.0,0,0.0,0.0,3,0,100.0,0
-10/08,2,L 0-2,California School for the Deaf,2,9,4.5,47.4,19,1,0.421,0,0.0,0,0,0,1,1,0.5,1,7,0,3.5,14,1,7.0,0,0.0,0.0,7,0,100.0,0
-10/08,3,L 1-2,California School for the Deaf-Riverside,3,4,1.3,18.2,22,3,0.045,0,0.0,0,0,0,0,0,0.0,0,8,0,2.7,7,3,2.3,0,0.0,0.0,3,0,100.0,0
-10/11,1,W 3-0,Riverdale Baptist,3,2,0.7,13.3,15,1,0.067,0,0.0,0,0,0,0,0,0.0,0,11,0,3.7,15,3,5.0,0,0.0,0.0,5,1,80.0,0
-10/12,1,W 3-1,Burke,4,5,1.3,27.8,18,3,0.111,1,0.3,0,0,0,0,0,0.0,0,6,0,1.5,9,1,2.3,1,0.3,10.0,10,0,100.0,0
-10/13,1,W 3-0,Berman Hebrew Academy,3,4,1.3,66.7,6,2,0.333,0,0.0,0,0,0,0,0,0.0,0,7,0,2.3,3,0,1.0,2,0.7,50.0,4,1,75.0,0
-10/15,1,W 3-0,Mississippi School for the Deaf,3,9,3.0,33.3,27,6,0.111,2,0.7,0,0,0,0,0,0.0,0,8,0,2.7,5,1,1.7,2,0.7,16.7,12,0,100.0,0
-10/18,1,W 3-0,Spencerville Adventist Academy,3,3,1.0,10.3,29,5,-0.069,1,0.3,0,0,0,0,0,0.0,0,17,0,5.7,16,1,5.3,10,3.3,37.0,27,1,96.3,0
-10/19,1,L 2-3,Washington International,5,5,1.0,16.1,31,2,0.097,1,0.2,0,0,0,0,0,0.0,0,23,0,4.6,16,1,3.2,4,0.8,30.8,13,1,92.3,0
-10/20,1,W 3-0,Field,1,3,3.0,60.0,5,0,0.6,0,0.0,0,0,0,0,0,0.0,0,0,0,0.0,2,0,2.0,0,0.0,0.0,0,0,0.0,0
-10/21,1,L 1-3,Stone Ridge School of the Sacred Heart,4,5,1.3,20.8,24,2,0.125,1,0.3,0,0,0,0,0,0.0,1,18,0,4.5,23,2,5.8,1,0.3,10.0,10,1,90.0,0
-10/24,1,L 0-3,Covenant Life,3,2,0.7,10.0,20,3,-0.05,0,0.0,0,0,0,0,0,0.0,0,8,0,2.7,17,4,5.7,0,0.0,0.0,5,1,80.0,0
-10/26,1,L 0-3,King Abdullah Academy,3,1,0.3,20.0,5,3,-0.4,0,0.0,0,0,0,0,0,0.0,0,1,0,0.3,10,3,3.3,0,0.0,0.0,0,0,0.0,0
-10/27,1,L 0-3,Georgetown Day,3,3,1.0,12.5,24,2,0.042,0,0.0,0,0,0,0,0,0.0,0,17,0,5.7,16,3,5.3,0,0.0,0.0,7,1,85.7,0
-11/08,1,W 3-0,Parkside,3,10,3.3,47.6,21,3,0.333,0,0.0,0,0,0,0,0,0.0,0,11,0,3.7,6,0,2.0,11,3.7,57.9,19,0,100.0,0
-11/09,1,W 3-0,Jackson-Reed,3,4,1.3,40.0,10,2,0.2,0,0.0,0,0,0,0,0,0.0,0,11,0,3.7,12,3,4.0,4,1.3,20.0,20,0,100.0,0
-11/10,1,W 3-0,Maret,3,6,2.0,31.6,19,2,0.211,2,0.7,0,0,0,0,0,0.0,0,9,0,3.0,14,4,4.7,1,0.3,9.1,11,1,90.9,0
-11/11,1,L 0-3,St. John's,3,4,1.3,23.5,17,1,0.176,0,0.0,0,0,0,0,0,0.0,0,13,0,4.3,17,2,5.7,0,0.0,0.0,4,0,100.0,0
+date,match_number,match_id,match_index,season_label,season_year,result,set_result,set_diff,set_count,margin_pct,numeric_result,opponent,weekday,is_duplicate_opponent_on_date,is_tournament,sets_played,kills,kills_per_set,kill_pct,kill_att,kill_err,hit_pct,assists,assists_per_set,ball_handling_att,ball_handling_err,solo_blks,assisted_blks,total_blks,blks_per_set,blk_err,digs,dig_err,digs_per_set,receiving,receiving_err,recieving_per_set,aces,aces_per_set,ace_pct,serve_att,serve_err,serve_pct,points,opponent_original,opponent_unknown,opponent_code
+2016-09-01,1,2016_2016-09-01_G1,1,freshman,2016,W,3-0,3.0,3.0,1.0,1,Takoma Academy,Thursday,False,False,3,5,1.7,20.0,25,6,-0.04,0,0.0,0,0,0,0,0,0.0,0,7,0,2.3,13,2,4.3,6,2.0,40.0,15,2,86.7,0,Takoma Academy,False,takoma_academy
+2016-09-09,1,2016_2016-09-09_G1,2,freshman,2016,W,2-0,2.0,2.0,1.0,1,River City Science Academy,Friday,False,True,2,6,3.0,42.9,14,1,0.357,0,0.0,0,0,1,0,1,0.5,0,5,0,2.5,13,0,6.5,2,1.0,33.3,6,0,100.0,0,River City Science Academy,False,river_city_science_academy
+2016-09-09,2,2016_2016-09-09_G2,3,freshman,2016,W,2-0,2.0,2.0,1.0,1,Interlachen,Friday,False,True,2,3,1.5,16.7,18,3,0.0,0,0.0,0,0,1,0,1,0.5,0,10,0,5.0,8,2,4.0,4,2.0,50.0,8,0,100.0,0,Interlachen,False,interlachen
+2016-09-09,3,2016_2016-09-09_G3,4,freshman,2016,W,2-0,2.0,2.0,1.0,1,Florida School for the Deaf & Blind,Friday,False,True,2,3,1.5,20.0,15,4,-0.067,0,0.0,0,0,1,0,1,0.5,0,4,0,2.0,12,2,6.0,5,2.5,62.5,8,0,100.0,0,Florida School for the Deaf & Blind,False,florida_school_for_the_deaf_&_blind
+2016-09-17,1,2016_2016-09-17_G1,5,freshman,2016,W,3-0,3.0,3.0,1.0,1,Alabama School for the Deaf,Saturday,False,False,3,11,3.7,44.0,25,6,0.2,0,0.0,0,0,0,0,0,0.0,0,10,0,3.3,12,0,4.0,2,0.7,22.2,9,1,88.9,0,Alabama School for the Deaf,False,alabama_school_for_the_deaf
+2016-09-20,1,2016_2016-09-20_G1,6,freshman,2016,W,3-0,3.0,3.0,1.0,1,Smith Jewish Day School,Tuesday,False,False,3,7,2.3,31.8,22,3,0.182,1,0.3,0,0,0,0,0,0.0,0,12,0,4.0,12,1,4.0,3,1.0,37.5,8,0,100.0,0,Smith Jewish Day School,False,smith_jewish_day_school
+2016-09-22,1,2016_2016-09-22_G1,7,freshman,2016,W,3-0,3.0,3.0,1.0,1,Riverdale Baptist,Thursday,False,False,3,5,1.7,45.5,11,1,0.364,0,0.0,0,0,0,0,0,0.0,0,19,0,6.3,16,3,5.3,2,0.7,20.0,10,1,90.0,0,Riverdale Baptist,False,riverdale_baptist
+2016-09-24,1,2016_2016-09-24_G1,8,freshman,2016,L,0-2,-2.0,2.0,-1.0,-1,Islamic Saudi Academy,Saturday,False,True,2,1,0.5,11.1,9,3,-0.222,2,1.0,0,0,0,0,0,0.0,0,4,0,2.0,11,2,5.5,0,0.0,0.0,3,1,66.7,0,Islamic Saudi Academy,False,islamic_saudi_academy
+2016-09-24,2,2016_2016-09-24_G2,9,freshman,2016,W,2-0,2.0,2.0,1.0,1,Sidwell Friends,Saturday,True,True,2,3,1.5,16.7,18,2,0.056,0,0.0,0,0,0,0,0,0.0,0,10,0,5.0,10,1,5.0,1,0.5,50.0,2,0,100.0,0,Sidwell Friends,False,sidwell_friends
+2016-09-24,3,2016_2016-09-24_G3,10,freshman,2016,L,0-2,-2.0,2.0,-1.0,-1,Jackson-Reed,Saturday,False,True,2,4,2.0,25.0,16,6,-0.125,0,0.0,0,0,0,0,0,0.0,0,2,0,1.0,4,0,2.0,2,1.0,50.0,4,0,100.0,0,Jackson-Reed,False,jackson-reed
+2016-09-24,4,2016_2016-09-24_G4,11,freshman,2016,W,2-1,1.0,3.0,0.3333333333333333,1,Sidwell Friends,Saturday,True,True,3,6,2.0,42.9,14,0,0.429,1,0.3,0,0,0,0,0,0.0,0,6,0,2.0,8,1,2.7,0,0.0,0.0,4,2,50.0,0,Sidwell Friends,False,sidwell_friends
+2016-10-04,1,2016_2016-10-04_G1,12,freshman,2016,W,3-0,3.0,3.0,1.0,1,Oakcrest,Tuesday,False,False,3,11,3.7,50.0,22,2,0.409,0,0.0,0,0,1,0,1,0.3,0,12,0,4.0,7,4,2.3,5,1.7,50.0,10,1,90.0,0,Oakcrest,False,oakcrest
+2016-10-07,1,2016_2016-10-07_G1,13,freshman,2016,L,0-2,-2.0,2.0,-1.0,-1,Maryland School for the Deaf,Friday,False,True,2,3,1.5,15.0,20,4,-0.05,0,0.0,0,0,0,1,1,0.5,0,2,0,1.0,10,1,5.0,0,0.0,0.0,3,0,100.0,0,Maryland School for the Deaf,False,maryland_school_for_the_deaf
+2016-10-07,2,2016_2016-10-07_G2,14,freshman,2016,W,2-1,1.0,3.0,0.3333333333333333,1,California School for the Deaf-Riverside,Friday,False,True,3,6,2.0,28.6,21,3,0.143,0,0.0,0,0,0,0,0,0.0,0,9,0,3.0,7,2,2.3,1,0.3,8.3,12,0,100.0,0,California School for the Deaf-Riverside,False,california_school_for_the_deaf-riverside
+2016-10-07,3,2016_2016-10-07_G3,15,freshman,2016,L,0-2,-2.0,2.0,-1.0,-1,Texas School for the Deaf,Friday,False,True,2,2,1.0,15.4,13,3,-0.077,0,0.0,0,0,0,0,0,0.0,0,11,0,5.5,9,3,4.5,0,0.0,0.0,2,2,0.0,0,Texas School for the Deaf,False,texas_school_for_the_deaf
+2016-10-07,4,2016_2016-10-07_G4,16,freshman,2016,L,1-2,-1.0,3.0,-0.3333333333333333,-1,California School for the Deaf,Friday,False,True,3,3,1.0,21.4,14,2,0.071,0,0.0,0,0,0,1,1,0.3,0,2,0,0.7,16,4,5.3,0,0.0,0.0,5,1,80.0,0,California School for the Deaf,False,california_school_for_the_deaf
+2016-10-08,1,2016_2016-10-08_G1,17,freshman,2016,L,0-2,-2.0,2.0,-1.0,-1,Indiana School for the Deaf,Saturday,False,True,2,2,1.0,15.4,13,2,0.0,0,0.0,0,0,0,0,0,0.0,0,3,0,1.5,10,4,5.0,0,0.0,0.0,3,0,100.0,0,Indiana School for the Deaf,False,indiana_school_for_the_deaf
+2016-10-08,2,2016_2016-10-08_G2,18,freshman,2016,L,0-2,-2.0,2.0,-1.0,-1,California School for the Deaf,Saturday,False,True,2,9,4.5,47.4,19,1,0.421,0,0.0,0,0,0,1,1,0.5,1,7,0,3.5,14,1,7.0,0,0.0,0.0,7,0,100.0,0,California School for the Deaf,False,california_school_for_the_deaf
+2016-10-08,3,2016_2016-10-08_G3,19,freshman,2016,L,1-2,-1.0,3.0,-0.3333333333333333,-1,California School for the Deaf-Riverside,Saturday,False,True,3,4,1.3,18.2,22,3,0.045,0,0.0,0,0,0,0,0,0.0,0,8,0,2.7,7,3,2.3,0,0.0,0.0,3,0,100.0,0,California School for the Deaf-Riverside,False,california_school_for_the_deaf-riverside
+2016-10-11,1,2016_2016-10-11_G1,20,freshman,2016,W,3-0,3.0,3.0,1.0,1,Riverdale Baptist,Tuesday,False,False,3,2,0.7,13.3,15,1,0.067,0,0.0,0,0,0,0,0,0.0,0,11,0,3.7,15,3,5.0,0,0.0,0.0,5,1,80.0,0,Riverdale Baptist,False,riverdale_baptist
+2016-10-12,1,2016_2016-10-12_G1,21,freshman,2016,W,3-1,2.0,4.0,0.5,1,Burke,Wednesday,False,False,4,5,1.3,27.8,18,3,0.111,1,0.3,0,0,0,0,0,0.0,0,6,0,1.5,9,1,2.3,1,0.3,10.0,10,0,100.0,0,Burke,False,burke
+2016-10-13,1,2016_2016-10-13_G1,22,freshman,2016,W,3-0,3.0,3.0,1.0,1,Berman Hebrew Academy,Thursday,False,False,3,4,1.3,66.7,6,2,0.333,0,0.0,0,0,0,0,0,0.0,0,7,0,2.3,3,0,1.0,2,0.7,50.0,4,1,75.0,0,Berman Hebrew Academy,False,berman_hebrew_academy
+2016-10-15,1,2016_2016-10-15_G1,23,freshman,2016,W,3-0,3.0,3.0,1.0,1,Mississippi School for the Deaf,Saturday,False,False,3,9,3.0,33.3,27,6,0.111,2,0.7,0,0,0,0,0,0.0,0,8,0,2.7,5,1,1.7,2,0.7,16.7,12,0,100.0,0,Mississippi School for the Deaf,False,mississippi_school_for_the_deaf
+2016-10-18,1,2016_2016-10-18_G1,24,freshman,2016,W,3-0,3.0,3.0,1.0,1,Spencerville Adventist Academy,Tuesday,False,False,3,3,1.0,10.3,29,5,-0.069,1,0.3,0,0,0,0,0,0.0,0,17,0,5.7,16,1,5.3,10,3.3,37.0,27,1,96.3,0,Spencerville Adventist Academy,False,spencerville_adventist_academy
+2016-10-19,1,2016_2016-10-19_G1,25,freshman,2016,L,2-3,-1.0,5.0,-0.2,-1,Washington International,Wednesday,False,False,5,5,1.0,16.1,31,2,0.097,1,0.2,0,0,0,0,0,0.0,0,23,0,4.6,16,1,3.2,4,0.8,30.8,13,1,92.3,0,Washington International,False,washington_international
+2016-10-20,1,2016_2016-10-20_G1,26,freshman,2016,W,3-0,3.0,3.0,1.0,1,Field,Thursday,False,False,1,3,3.0,60.0,5,0,0.6,0,0.0,0,0,0,0,0,0.0,0,0,0,0.0,2,0,2.0,0,0.0,0.0,0,0,0.0,0,Field,False,field
+2016-10-21,1,2016_2016-10-21_G1,27,freshman,2016,L,1-3,-2.0,4.0,-0.5,-1,Stone Ridge School of the Sacred Heart,Friday,False,False,4,5,1.3,20.8,24,2,0.125,1,0.3,0,0,0,0,0,0.0,1,18,0,4.5,23,2,5.8,1,0.3,10.0,10,1,90.0,0,Stone Ridge School of the Sacred Heart,False,stone_ridge_school_of_the_sacred_heart
+2016-10-24,1,2016_2016-10-24_G1,28,freshman,2016,L,0-3,-3.0,3.0,-1.0,-1,Covenant Life,Monday,False,False,3,2,0.7,10.0,20,3,-0.05,0,0.0,0,0,0,0,0,0.0,0,8,0,2.7,17,4,5.7,0,0.0,0.0,5,1,80.0,0,Covenant Life,False,covenant_life
+2016-10-26,1,2016_2016-10-26_G1,29,freshman,2016,L,0-3,-3.0,3.0,-1.0,-1,King Abdullah Academy,Wednesday,False,False,3,1,0.3,20.0,5,3,-0.4,0,0.0,0,0,0,0,0,0.0,0,1,0,0.3,10,3,3.3,0,0.0,0.0,0,0,0.0,0,King Abdullah Academy,False,king_abdullah_academy
+2016-10-27,1,2016_2016-10-27_G1,30,freshman,2016,L,0-3,-3.0,3.0,-1.0,-1,Georgetown Day,Thursday,False,False,3,3,1.0,12.5,24,2,0.042,0,0.0,0,0,0,0,0,0.0,0,17,0,5.7,16,3,5.3,0,0.0,0.0,7,1,85.7,0,Georgetown Day,False,georgetown_day
+2016-11-08,1,2016_2016-11-08_G1,31,freshman,2016,W,3-0,3.0,3.0,1.0,1,Parkside,Tuesday,False,False,3,10,3.3,47.6,21,3,0.333,0,0.0,0,0,0,0,0,0.0,0,11,0,3.7,6,0,2.0,11,3.7,57.9,19,0,100.0,0,Parkside,False,parkside
+2016-11-09,1,2016_2016-11-09_G1,32,freshman,2016,W,3-0,3.0,3.0,1.0,1,Jackson-Reed,Wednesday,False,False,3,4,1.3,40.0,10,2,0.2,0,0.0,0,0,0,0,0,0.0,0,11,0,3.7,12,3,4.0,4,1.3,20.0,20,0,100.0,0,Jackson-Reed,False,jackson-reed
+2016-11-10,1,2016_2016-11-10_G1,33,freshman,2016,W,3-0,3.0,3.0,1.0,1,Maret,Thursday,False,False,3,6,2.0,31.6,19,2,0.211,2,0.7,0,0,0,0,0,0.0,0,9,0,3.0,14,4,4.7,1,0.3,9.1,11,1,90.9,0,Maret,False,maret
+2016-11-11,1,2016_2016-11-11_G1,34,freshman,2016,L,0-3,-3.0,3.0,-1.0,-1,St. John's,Friday,False,False,3,4,1.3,23.5,17,1,0.176,0,0.0,0,0,0,0,0,0.0,0,13,0,4.3,17,2,5.7,0,0.0,0.0,4,0,100.0,0,St. John's,False,st._john's
