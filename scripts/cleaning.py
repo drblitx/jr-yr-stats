@@ -133,8 +133,17 @@ def add_derived_features(df, season_label, season_year):
 if __name__ == "__main__":
     dirs = ['freshman', 'sophomore', 'senior']
     years = [2016, 2017, 2019]
+    all_seasons = []
     for dir, yr in zip(dirs, years):
         season_raw_path = f'data/raw/{dir}'
         merged = merge_season_stats(season_raw_path)
         merged = add_derived_features(merged, season_label=dir, season_year=yr)
         merged.to_csv(f'data/cleaned/{dir}_full.csv', index=False)
+        all_seasons.append(merged)
+
+    # combine all in one df
+    df_all = pd.concat(all_seasons, ignore_index=True)
+    df_all = df_all.sort_values(by=['date', 'match_number']).reset_index(drop=True)
+    df_all['career_match_index'] = range(1, len(df_all) + 1)
+    df_all = df_all[merged.columns.tolist() + ['career_match_index']]
+    df_all.to_csv("data/cleaned/all_seasons.csv", index=False)
