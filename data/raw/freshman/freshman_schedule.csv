@@ -1,35 +1,37 @@
 date,opponent,result,set_scores,set_result,set_count,set_diff,h_a_n,is_conference,is_playoffs,is_tournament,maxpreps
-09/01,Takoma Academy,W,3-0,
-09/09,River City Science Academy,W,2-0,
-09/09,Interlachen,W,2-0,
-09/09,Florida School for the Deaf & Blind,W,2-0,
-09/17,Alabama School for the Deaf,W,3-0,
-09/20,Smith Jewish Day School,W,3-0,
-09/22,Riverdale Baptist,W,3-0,
-09/24,Islamic Saudi Academy,L,0-2,
-09/24,Sidwell Friends,W,2-0,
-09/24,Jackson-Reed,L,0-2,
-09/24,Sidwell Friends,W,2-1
-10/04,Oakcrest,W,3-0,
-10/07,Maryland School for the Deaf,L,0-2,
-10/07,California School for the Deaf-Riverside,W,2-1,
-10/07,Texas School for the Deaf,L,0-2,
-10/07,California School for the Deaf,L,1-2,
-10/08,Indiana School for the Deaf,L,0-2
-10/08,California School for the Deaf,L,0-2,
-10/08,California School for the Deaf-Riverside,L,1-2
-10/11,Riverdale Baptist,W,3-0,
-10/12,Burke,W,3-1,
-10/13,Berman Hebrew Academy,W,3-0,
-10/15,Mississippi School for the Deaf,W,3-0,
-10/18,Spencerville Adventist Academy,W,3-0,
-10/19,Washington International,L,2-3,
-10/20,Field,W,3-0,
-10/21,Stone Ridge School of the Sacred Heart,L,1-3,
-10/24,Covenant Life,L,0-3,
-10/26,King Abdullah Academy,L,0-3,
-10/27,Georgetown Day,L,0-3,
-11/08,Parkside,W,3-0,
-11/09,Jackson-Reed,W,3-0,
-11/10,Maret,W,3-0,
-11/11,St. John's,L,0-3
+09/01,Takoma Academy,W,"25-22,25-19,25-13",3-0,3,3,away,False,False,False,https://www.maxpreps.com/games/9-1-2016/volleyball-16/model-secondary-school-for-the-deaf-vs-takoma-academy.htm?c=RvM_PsTPpUqW-rKrugJlqw#tab=box-score&schoolid=
+09/09,River City Science Academy,W,"25-11,25-19",2-0,2,2,neutral,False,False,True,https://www.maxpreps.com/games/9-9-2016/volleyball-16/model-secondary-school-for-the-deaf-vs-river-city-science-academy.htm?c=pi9qfk1i5EmrOFHajdNXlA#tab=box-score&schoolid=
+09/09,Interlachen,W,"25-14,25-19",2-0,2,2,neutral,False,False,True,https://www.maxpreps.com/games/9-9-2016/volleyball-16/interlachen-vs-model-secondary-school-for-the-deaf.htm?c=kA1J5gUZYkGHUe9qPJ2ZFQ#tab=box-score&schoolid=
+09/09,Florida School for the Deaf & Blind,W,"26-24,25-14",2-0,2,2,away,False,False,True,https://www.maxpreps.com/games/9-9-2016/volleyball-16/florida-school-for-the-deaf-and-blind-vs-model-secondary-school-for-the-deaf.htm?c=57jGU_XGx064Xen13AMNDQ#tab=box-score&schoolid=
+09/17,Alabama School for the Deaf,W,"25-21,25-13,25-11",3-0,3,3,home,False,False,False,https://www.maxpreps.com/games/9-17-2016/volleyball-16/alabama-school-for-the-deaf-vs-model-secondary-school-for-the-deaf.htm?c=kXOQNahMc02EHVChPD9akw#tab=box-score&schoolid=
+09/20,Smith Jewish Day School,W,"25-8,25-18,25-11",3-0,3,3,home,True,False,False,https://www.maxpreps.com/games/09-20-2016/volleyball-16/model-secondary-school-for-the-deaf-vs-smith-jewish-day-school.htm?c=7PNjdNdlz0CeKtt37FNG9Q
+09/22,Riverdale Baptist,W,"25-16,25-12,25-22",3-0,3,3,away,False,False,False,https://www.maxpreps.com/games/9-22-2016/volleyball-16/model-secondary-school-for-the-deaf-vs-riverdale-baptist.htm?c=nxuukkNYG0GZqKd8l3qQdw#tab=box-score&schoolid=
+09/24,Connelly School of the Holy Child,W,NA,2-0,2,2,home,False,False,True,https://www.maxpreps.com/games/9-24-2016/volleyball-16/connelly-school-of-the-holy-child-vs-model-secondary-school-for-the-deaf.htm?c=jBxjGiIWW0u7_teU_JgZVg#tab=matchup&schoolid=
+09/24,Islamic Saudi Academy,L,"20-25,17-25",0-2,2,-2,home,False,False,True,https://www.maxpreps.com/games/9-24-2016/volleyball-16/islamic-saudi-academy-vs-model-secondary-school-for-the-deaf.htm?c=vIP1JGBVT0OrNQn3k7Vbug#tab=box-score&schoolid=
+09/24,Sidwell Friends,W,"25-20,25-22",2-0,2,2,home,False,False,True,https://www.maxpreps.com/games/9-24-2016/volleyball-16/model-secondary-school-for-the-deaf-vs-sidwell-friends.htm?c=JEvBgo21gkC-Z8s4LWkp1A#tab=box-score&schoolid=
+09/24,Jackson-Reed,L,"12-25,23-25",0-2,2,-2,home,False,False,True,https://www.maxpreps.com/games/9-24-2016/volleyball-16/jackson-reed-vs-model-secondary-school-for-the-deaf.htm?c=N6-HRS3cNkOz2AJD_0rVbw#tab=box-score&schoolid=
+09/24,Sidwell Friends,W,"17-25,25-23,15-9",2-1,3,1,home,False,False,True,https://www.maxpreps.com/games/9-24-2016/volleyball-16/model-secondary-school-for-the-deaf-vs-sidwell-friends.htm?c=XwBzBi0pnUmHClGqHKF48g#tab=box-score&schoolid=
+09/27,McLean,W,"25-13,25-12,25-4",3-0,3,3,away,True,False,False,https://www.maxpreps.com/games/09-27-2016/volleyball-16/mclean-vs-model-secondary-school-for-the-deaf.htm?c=ySNeF2UEdk6EgKi-o-mblA
+10/04,Oakcrest,W,"25-23,25-8,25-11",3-0,3,3,home,True,False,False,https://www.maxpreps.com/games/10-4-2016/volleyball-16/model-secondary-school-for-the-deaf-vs-oakcrest.htm?c=aUV_nOezW0CdAXm48_6bgg#tab=box-score&schoolid=
+10/07,Maryland School for the Deaf,L,"10-25,17-25",0-2,2,-2,neutral,False,False,True,https://www.maxpreps.com/games/10-7-2016/volleyball-16/maryland-school-for-the-deaf-vs-model-secondary-school-for-the-deaf.htm?c=owB3x6209kypjGTlkFpyUg#tab=box-score&schoolid=
+10/07,California School for the Deaf-Riverside,W,"20-25,25-23,15-12",2-1,3,1,neutral,False,False,True,https://www.maxpreps.com/games/10-7-2016/volleyball-16/california-school-for-the-deaf-riverside-vs-model-secondary-school-for-the-deaf.htm?c=591mwas5f0WoifVu5uqlog#tab=box-score&schoolid=
+10/07,Texas School for the Deaf,L,"11-25,16-25",0-2,2,-2,neutral,False,False,True,https://www.maxpreps.com/games/10-7-2016/volleyball-16/model-secondary-school-for-the-deaf-vs-texas-school-for-the-deaf.htm?c=AZ1n_IF5o0qp55V7f-lMvg#tab=box-score&schoolid=
+10/07,California School for the Deaf,L,"25-21,14-25,9-15",1-2,3,-1,neutral,False,False,True,https://www.maxpreps.com/games/10-7-2016/volleyball-16/california-school-for-the-deaf-vs-model-secondary-school-for-the-deaf.htm?c=2GJMycrpkUGekllexQB5WQ#tab=box-score&schoolid=
+10/08,Indiana School for the Deaf,L,"14-25,14-25",0-2,2,-2,neutral,False,False,True,https://www.maxpreps.com/games/10-8-2016/volleyball-16/indiana-school-for-the-deaf-vs-model-secondary-school-for-the-deaf.htm?c=wj2y6CuesEukVstn_5dczA#tab=box-score&schoolid=
+10/08,California School for the Deaf,L,"18-25,20-25",0-2,2,-2,neutral,False,False,True,https://www.maxpreps.com/games/10-8-2016/volleyball-16/california-school-for-the-deaf-vs-model-secondary-school-for-the-deaf.htm?c=fuAmSgfRsUuIfu9RrW5Euw#tab=box-score&schoolid=
+10/08,California School for the Deaf-Riverside,L,"27-25,17-25,9-15",1-2,3,-1,neutral,False,False,True,https://www.maxpreps.com/games/10-8-2016/volleyball-16/california-school-for-the-deaf-riverside-vs-model-secondary-school-for-the-deaf.htm?c=EOTlFc410ESAEZ792PdFiA#tab=box-score&schoolid=
+10/11,Riverdale Baptist,W,"25-15,25-11,25-12",3-0,3,3,home,False,False,False,https://www.maxpreps.com/games/10-11-2016/volleyball-16/model-secondary-school-for-the-deaf-vs-riverdale-baptist.htm?c=LTfs0953zkmtl3g-YTlQmw#tab=box-score&schoolid=
+10/12,Burke,W,"25-9,25-12,22-25,25-10",3-1,4,2,away,True,False,False,https://www.maxpreps.com/games/10-12-2016/volleyball-16/burke-vs-model-secondary-school-for-the-deaf.htm?c=Us4trl_zYE-CmlSfbnhPPg#tab=box-score&schoolid=
+10/13,Berman Hebrew Academy,W,"25-3,25-4,25-9",3-0,3,3,away,True,False,False,https://www.maxpreps.com/games/10-13-2016/volleyball-16/berman-hebrew-academy-vs-model-secondary-school-for-the-deaf.htm?c=wBOWsi4yKU-0NsYO6AW5gA#tab=box-score&schoolid=
+10/15,Mississippi School for the Deaf,W,"25-15,25-14,25-13",3-0,3,3,home,False,False,False,https://www.maxpreps.com/games/10-15-2016/volleyball-16/mississippi-school-for-the-deaf-vs-model-secondary-school-for-the-deaf.htm?c=QLQua9MRV06tGzikyS_X5Q#tab=box-score&schoolid=
+10/18,Spencerville Adventist Academy,W,"25-15,25-9,25-9",3-0,3,3,home,True,False,False,https://www.maxpreps.com/games/10-18-2016/volleyball-16/model-secondary-school-for-the-deaf-vs-spencerville-adventist-academy.htm?c=dOdx3x38hUGxQ27mlnE5lw#tab=box-score&schoolid=
+10/19,Washington International,L,"23-25,14-25,25-18,25-19,10-15",2-3,5,-1,home,True,False,False,https://www.maxpreps.com/games/10-19-2016/volleyball-16/model-secondary-school-for-the-deaf-vs-washington-international.htm?c=3wDvA7Z8JkS_UPTSjFy3kA#tab=box-score&schoolid=
+10/20,Field,W,"25-4,25-10,25-16",3-0,3,3,away,True,False,False,https://www.maxpreps.com/games/10-20-2016/volleyball-16/field-vs-model-secondary-school-for-the-deaf.htm?c=c2uXDnz9_E-5t8OAyhaZdA#tab=box-score&schoolid=
+10/21,Stone Ridge School of the Sacred Heart,L,"14-25,23-25,25-17,16-25",1-3,4,-2,home,False,False,False,https://www.maxpreps.com/games/10-21-2016/volleyball-16/model-secondary-school-for-the-deaf-vs-stone-ridge-school-of-the-sacred-heart.htm?c=nVB-PHRnU0W-XWA-RQ6dcg#tab=box-score&schoolid=
+10/24,Covenant Life,L,"18-25,19-25,19-25",0-3,3,-3,away,True,False,False,https://www.maxpreps.com/games/10-24-2016/volleyball-16/covenant-life-vs-model-secondary-school-for-the-deaf.htm?c=HwFfJ1cHOESVd3ar6pDj9g#tab=box-score&schoolid=
+10/26,King Abdullah Academy,L,"21-25,17-25,17-25",0-3,3,-3,away,False,False,False,https://www.maxpreps.com/games/10-26-2016/volleyball-16/king-abdullah-academy-vs-model-secondary-school-for-the-deaf.htm?c=-tOrhWspCEeA5i44Oqpqsg#tab=box-score&schoolid=
+10/27,Georgetown Day,L,"23-25,18-25,20-25",0-3,3,-3,away,False,False,False,https://www.maxpreps.com/games/10-27-2016/volleyball-16/georgetown-day-vs-model-secondary-school-for-the-deaf.htm?c=R3MWzYqaokauTCV50skhGg#tab=box-score&schoolid=
+11/08,Parkside,W,"25-10,25-13,25-7",3-0,3,3,home,False,True,True,https://www.maxpreps.com/games/11-8-2016/volleyball-16/model-secondary-school-for-the-deaf-vs-parkside.htm?c=mx6fmINk5EK6YawEoc4h1A#tab=box-score&schoolid=
+11/09,Jackson-Reed,W,"25-21,25-17,25-15",3-0,3,3,away,False,True,True,https://www.maxpreps.com/games/11-9-2016/volleyball-16/jackson-reed-vs-model-secondary-school-for-the-deaf.htm?c=RTKAoLMPCk63gR0nYK7KEw#tab=box-score&schoolid=
+11/10,Maret,W,"25-23,25-17,25-23",3-0,3,3,home,False,True,True,https://www.maxpreps.com/games/11-10-2016/volleyball-16/maret-vs-model-secondary-school-for-the-deaf.htm?c=96mssrBQ20WDyAp_g56jLg#tab=box-score&schoolid=
+11/11,St. John's,L,"12-25,13-25,15-25",0-3,3,-3,neutral,False,True,True,https://www.maxpreps.com/games/11-11-2016/volleyball-16/model-secondary-school-for-the-deaf-vs-st-johns.htm?c=poFrFJ7iK0eyg9kZPUOQaw#tab=box-score&schoolid=
