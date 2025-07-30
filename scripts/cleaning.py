@@ -107,7 +107,11 @@ def add_derived_features(df, season_label, season_year):
                         '2017-09-23', # Model Invitational 2017
                         '2017-10-06', # SpikeOut 2017 @ Maryland
                         '2017-10-07', # SpikeOut 2017 @ Maryland
-                        '2019-09-07', # Tournament in SOOOOOUTH VA, can't remember name??
+                        '2018-09-08', # Fredericksburg Inviational 2018
+                        '2018-09-22', # Model Invitational 2018
+                        '2018-10-05', # Spikeout 2018 @ Model
+                        '2018-10-06', # Spikeout 2018 @ Model
+                        '2019-09-07', # Fredericksburg Invitational 2019
                         '2019-09-14', # MSD's Oriole Classic 2019
                         '2019-09-21', # Model Invitational 2019
                         '2019-10-04', # Spikeout 2019 @ Riverside
@@ -147,3 +151,4 @@ if __name__ == "__main__":
     df_all['career_match_index'] = range(1, len(df_all) + 1)
     df_all = df_all[merged.columns.tolist() + ['career_match_index']]
     df_all.to_csv("data/cleaned/all_seasons.csv", index=False)
+    
