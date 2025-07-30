@@ -110,11 +110,16 @@ if len(unmapped) > 0:
     raise ValueError("STOP: unmapped opponents need to be filled in.")
 
 # forfeited, out sick, out injured matches
-forfeited_dates = pd.to_datetime(['2016-09-24', '2019-10-21'])
+forfeited_matches = [
+    ("2016-09-24", "Connelly School of the Holy Child"),
+    ("2019-10-21", "Roosevelt")]
 sick_dates = pd.to_datetime(['2016-09-27', '2017-09-18'])
 injured_dates = pd.to_datetime(['2017-11-07', '2017-11-08'])
 
-df["forfeited"] = df["date"].isin((forfeited_dates))
+df["forfeited"] = df.apply(
+    lambda row: (row["date"].strftime("%Y-%m-%d"), row["opponent"]) in forfeited_matches,
+    axis=1
+)
 df["sick"] = df["date"].isin((sick_dates))
 df["injured"] = df["date"].isin((injured_dates))
 
@@ -135,23 +140,23 @@ df["match_key"] = (
 
 # game importances
 tournament_dates = ['2016-09-09', # FSDB Invitational 2016
-                        '2016-09-24', # Model Invitational 2016
-                        '2016-10-07', # SpikeOut 2016 @ Indiana
-                        '2016-10-08', # SpikeOut 2016 @ Indiana
-                        '2017-09-23', # Model Invitational 2017
-                        '2017-10-06', # SpikeOut 2017 @ Maryland
-                        '2017-10-07', # SpikeOut 2017 @ Maryland
-                        '2018-09-08', # Fredericksburg Inviational 2018
-                        '2018-09-22', # Model Invitational 2018
-                        '2018-10-05', # Spikeout 2018 @ Model
-                        '2018-10-06', # Spikeout 2018 @ Model
-                        '2019-09-07', # Fredericksburg Invitational 2019
-                        '2019-09-14', # MSD's Oriole Classic 2019
-                        '2019-09-21', # Model Invitational 2019
-                        '2019-10-04', # Spikeout 2019 @ Riverside
-                        '2019-10-05', # Spikeout 2019 @ Riverside
-                        '2019-10-12', # Wilson Tiger Paws Invitational 2019
-                        ]
+                    '2016-09-24', # Model Invitational 2016
+                    '2016-10-07', # SpikeOut 2016 @ Indiana
+                    '2016-10-08', # SpikeOut 2016 @ Indiana
+                    '2017-09-23', # Model Invitational 2017
+                    '2017-10-06', # SpikeOut 2017 @ Maryland
+                    '2017-10-07', # SpikeOut 2017 @ Maryland
+                    '2018-09-08', # Fredericksburg Inviational 2018
+                    '2018-09-22', # Model Invitational 2018
+                    '2018-10-05', # Spikeout 2018 @ Model
+                    '2018-10-06', # Spikeout 2018 @ Model
+                    '2019-09-07', # Fredericksburg Invitational 2019
+                    '2019-09-14', # MSD's Oriole Classic 2019
+                    '2019-09-21', # Model Invitational 2019
+                    '2019-10-04', # Spikeout 2019 @ Riverside
+                    '2019-10-05', # Spikeout 2019 @ Riverside
+                    '2019-10-12', # Wilson Tiger Paws Invitational 2019
+                    ]
 
 pvac_champs = ['2017-10-30', '2018-10-29', '2019-10-30']
 dcsaa_champs = ['2016-11-11']
@@ -193,6 +198,28 @@ importance_map = {
 }
 df["game_importance"] = df["match_type"].map(lambda x: importance_map.get(x, ("low", 0))[0])
 df["game_importance_score"] = df["match_type"].map(lambda x: importance_map.get(x, ("low", 0))[1])
+
+# event names
+event_name_map = {
+    '2016-09-09': "FSDB Invitational 2016",
+    '2016-09-24': "Model Invitational 2016",
+    '2016-10-07': "SpikeOut 2016 @ Indiana",
+    '2016-10-08': "SpikeOut 2016 @ Indiana",
+    '2017-09-23': "Model Invitational 2017",
+    '2017-10-06': "SpikeOut 2017 @ Maryland",
+    '2017-10-07': "SpikeOut 2017 @ Maryland",
+    '2018-09-08': "Fredericksburg Invitational 2018",
+    '2018-09-22': "Model Invitational 2018",
+    '2018-10-05': "SpikeOut 2018 @ Model",
+    '2018-10-06': "SpikeOut 2018 @ Model",
+    '2019-09-07': "Fredericksburg Invitational 2019",
+    '2019-09-14': "Oriole Classic 2019 @ Maryland",
+    '2019-09-21': "Model Invitational 2019",
+    '2019-10-04': "SpikeOut 2019 @ Riverside",
+    '2019-10-05': "SpikeOut 2019 @ Riverside",
+    '2019-10-12': "Tiger Paws Invitational 2019 @ Wilson"
+}
+df["event_name"] = df["date"].dt.strftime("%Y-%m-%d").map(event_name_map)
 
 # revenge matches (lost game, won next one against same team)
 df = df.sort_values(by="date").copy()
@@ -262,28 +289,58 @@ df["last_match_of_day"] = df.apply(
     axis=1
 )
 
+# season stage
+df["season_stage"] = (
+    df.groupby("season")["season_match_number"]
+    .transform(lambda x: pd.qcut(x, q=3, labels=["early", "mid", "late"]))
+)
+
+# multi match day
+df["multi_game_day"] = df["total_matches_that_day"] > 1
+
+# milestone flags
+df["milestone_flag"] = ""
+
+df.loc[df["career_match_index"] == 1, "milestone_flag"] = "first MSSD match"
+
+first_season_match = df.groupby("season")["season_match_number"].idxmin()
+df.loc[first_season_match, "milestone_flag"] = df.loc[first_season_match, "milestone_flag"].apply(
+    lambda x: x + "; " if x else ""
+) + df.loc[first_season_match, "season"].map(lambda s: f"first {s} match")
+
+last_season_match = df.groupby("season")["season_match_number"].idxmax()
+df.loc[last_season_match, "milestone_flag"] = df.loc[last_season_match, "milestone_flag"].apply(
+    lambda x: x + "; " if x else ""
+) + df.loc[last_season_match, "season"].map(lambda s: f"last {s} match")
+
+df.loc[df["career_match_index"] == df["career_match_index"].max(), "milestone_flag"] = df.loc[
+    df["career_match_index"] == df["career_match_index"].max(), "milestone_flag"
+].apply(lambda x: x + "; " if x else "") + "last MSSD match"
+
 # reorder columns
 desired_order = [
-    # match ID & ordering
+    # match identity & ordering
     "match_key",
     "career_match_index",
     "season",
     "season_match_number",
+    "season_stage",
     "date",
     "day_of_week",
     "week_of_season",
     "days_since_last_match",
     "is_back_to_back",
     "match_density_3days",
-    
-    # intra-day info
+
+    # same-day match context
     "match_no",
     "total_matches_that_day",
+    "multi_game_day",
     "first_match_of_day",
     "last_match_of_day",
     "same_day_opponent_seq",
 
-    # opponent sequence & context
+    # opponent context
     "opponent",
     "opponent_slug",
     "season_opponent_seq",
@@ -294,8 +351,10 @@ desired_order = [
     "match_type",
     "game_importance",
     "game_importance_score",
-    
-    # outcome & storyline tags
+    "event_name",
+    "milestone_flag",
+
+    # outcome and storyline tags
     "result",
     "set_scores",
     "set_result",
@@ -305,7 +364,7 @@ desired_order = [
     "revenge_match",
     "redemption_game",
 
-    # meta
+    # meta and manual flags
     "location",
     "injured",
     "sick",
@@ -313,7 +372,7 @@ desired_order = [
     "favorite_match",
     "birthday_match",
 
-    # tags from source
+    # imported flags from source data
     "is_conference",
     "is_playoffs",
     "is_tournament",
