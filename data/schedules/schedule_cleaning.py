@@ -205,19 +205,35 @@ event_name_map = {
     '2016-09-24': "Model Invitational 2016",
     '2016-10-07': "SpikeOut 2016 @ Indiana",
     '2016-10-08': "SpikeOut 2016 @ Indiana",
+    '2016-11-09': "DCSAA State Tournament Quarterfinals",
+    '2016-11-10': "DCSAA State Tournament Semifinals",
+    '2016-11-11': "DCSAA State Tournament Championship",
     '2017-09-23': "Model Invitational 2017",
     '2017-10-06': "SpikeOut 2017 @ Maryland",
     '2017-10-07': "SpikeOut 2017 @ Maryland",
+    '2017-10-23': "PVAC Tournament Quarterfinals",
+    '2017-10-25': "PVAC Tournament Semifinals",
+    '2017-10-30': "PVAC Tournament Championship",
+    '2017-11-07': "DCSAA State Tournament First Round",
+    '2017-11-08': "DCSAA State Tournament Quarterfinals",
     '2018-09-08': "Fredericksburg Invitational 2018",
     '2018-09-22': "Model Invitational 2018",
     '2018-10-05': "SpikeOut 2018 @ Model",
     '2018-10-06': "SpikeOut 2018 @ Model",
+    '2018-10-22': "PVAC Tournament Quarterfinals",
+    '2018-10-29': "PVAC Tournament Championship",
+    '2018-11-06': "DCSAA State Tournament First Round",
     '2019-09-07': "Fredericksburg Invitational 2019",
     '2019-09-14': "Oriole Classic 2019 @ Maryland",
     '2019-09-21': "Model Invitational 2019",
     '2019-10-04': "SpikeOut 2019 @ Riverside",
     '2019-10-05': "SpikeOut 2019 @ Riverside",
-    '2019-10-12': "Tiger Paws Invitational 2019 @ Wilson"
+    '2019-10-12': "Tiger Paws Invitational 2019 @ Wilson",
+    '2019-10-23': "PVAC Tournament Quarterfinals",
+    '2019-10-28': "PVAC Tournament Semifinals",
+    '2019-10-30': "PVAC Tournament Championship",
+    '2019-11-05': "DCSAA State Tournament First Round",
+    '2019-11-06': "DCSAA State Tournament Quarterfinals"
 }
 df["event_name"] = df["date"].dt.strftime("%Y-%m-%d").map(event_name_map)
 
@@ -295,6 +311,13 @@ df["season_stage"] = (
     .transform(lambda x: pd.qcut(x, q=3, labels=["early", "mid", "late"]))
 )
 
+# career stage (25, 50, 75)
+df["career_stage"] = pd.qcut(
+    df["career_match_index"],
+    q=[0, 0.25, 0.75, 1.0],
+    labels=["early", "mid", "late"]
+)
+
 # multi match day
 df["multi_game_day"] = df["total_matches_that_day"] > 1
 
@@ -317,11 +340,93 @@ df.loc[df["career_match_index"] == df["career_match_index"].max(), "milestone_fl
     df["career_match_index"] == df["career_match_index"].max(), "milestone_flag"
 ].apply(lambda x: x + "; " if x else "") + "last MSSD match"
 
+# set info
+df["was_set_swept"] = (df["result"] == "L") & (df["set_diff"] < 0) & (df["set_result"].str.startswith("0-"))
+df["swept_opponent"] = (df["result"] == "W") & (df["set_diff"] > 0) & (df["set_result"].str.endswith("-0"))
+df["deciding_set_played"] = df["set_count"].apply(
+    lambda x: x in [3, 5]
+)
+
+# scheduling info
+df["total_sets_that_day"] = df.groupby("date")["set_count"].transform("sum")
+
+# win/loss streaks
+df["win_streak"] = 0
+df["loss_streak"] = 0
+
+current_win = 0
+current_loss = 0
+streaks_win = []
+streaks_loss = []
+
+for res in df["result"]:
+    if res == "W":
+        current_win += 1
+        current_loss = 0
+    elif res == "L":
+        current_loss += 1
+        current_win = 0
+    else:
+        current_win = 0
+        current_loss = 0
+    streaks_win.append(current_win)
+    streaks_loss.append(current_loss)
+
+df["win_streak"] = streaks_win
+df["loss_streak"] = streaks_loss
+
+# psychological
+df["team_needed_win"] = df["loss_streak"] >= 2
+df["confidence_boost_game"] = (
+    (df["loss_streak"] >= 2) &
+    (df["result"] == "W")
+)
+df["confidence_boost_game"] = (
+    (df["loss_streak"] >= 2) &
+    (df["result"] == "W")
+)
+
+# highlight match
+df["highlight_match"] = False
+
+# total points for/against
+def get_total_points(row):
+    if pd.isna(row["set_scores"]):
+        return pd.Series([0, 0])
+    team_total, opp_total = 0, 0
+    for score in row["set_scores"].split(","):
+        try:
+            a, b = map(int, score.strip().split("-"))
+            if row["result"] == "W":
+                team_total += a
+                opp_total += b
+            else:
+                team_total += b
+                opp_total += a
+        except:
+            continue
+    return pd.Series([team_total, opp_total])
+
+df[["total_points_for", "total_points_against"]] = df.apply(get_total_points, axis=1)
+
+# margin %
+df["margin_pct"] = (
+    (df["total_points_for"] - df["total_points_against"]) /
+    (df["total_points_for"] + df["total_points_against"]).replace(0, pd.NA)
+)
+df["high_margin_win"] = (df["result"] == "W") & (df["margin_pct"] >= 0.6)
+df["low_margin_loss"] = (df["result"] == "L") & (df["margin_pct"] >= -0.1)
+
+# deaf schools
+deaf_schools = ["AIDB", "AASD", "CSDF", "CSDR", "FSDB", "ISD", "MSD", "MISD", "TSD"]
+df["deaf_school"] = df["opponent_slug"].isin(deaf_schools)
+
 # reorder columns
 desired_order = [
     # match identity & ordering
     "match_key",
     "career_match_index",
+    "career_stage",
     "season",
     "season_match_number",
     "season_stage",
@@ -346,6 +451,7 @@ desired_order = [
     "season_opponent_seq",
     "is_repeat_opponent",
     "rivalry",
+    "deaf_school",
 
     # match classification
     "match_type",
@@ -364,6 +470,13 @@ desired_order = [
     "revenge_match",
     "redemption_game",
 
+    # scoring & margin
+    "total_points_for",
+    "total_points_against",
+    "margin_pct",
+    "high_margin_win",
+    "low_margin_loss",
+
     # meta and manual flags
     "location",
     "injured",
@@ -371,6 +484,7 @@ desired_order = [
     "forfeited",
     "favorite_match",
     "birthday_match",
+    "highlight_match",
 
     # imported flags from source data
     "is_conference",

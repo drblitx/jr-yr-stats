@@ -3,9 +3,7 @@ so I can merge things clearly and without issues (as there are several occurrenc
 twice on the same day which could cause joining errors)
 
 I'm building a personal data project analyzing my performance in high school volleyball across three seasons:
-Freshman (2016)
-Sophomore (2017)
-Senior (2019)
+Freshman (2016), Sophomore (2017), Senior (2019)
 Then uses these analyses to predict what my stats would have been match-by-match and season during my junior year
 (see junior_full.csv for what I mean). My junior year was not tracked due to bad coaches (I have the schedules & results though);
 so I'm using data science to estimate what should've been.
@@ -13,133 +11,113 @@ so I'm using data science to estimate what should've been.
 This project compiles and cleans individual match-level statistics from each season, producing a dataset that supports analysis. 
 Examples include trends, situational performance, and match outcomes. Here's some examples of the columns I'll have
 
-I'd like to add a set to set array (i.e., ['W','W','L','W']),and the sets won/lost cols.
+🧍‍♀️ Personal + Participation Flags
+ injured
+ sick
+ forfeited
+ did_play → needs stats
+ played_all_sets → needs stats
+ is_repeat_opponent
+ milestone_flag (with detailed labels like "first MSSD match", "first SO match")
 
-and more context behind the tags
-🧍‍♀️ Personal + Participation Flags:
+🏷️ Match Context Tags
+ match_type
+ game_importance
+ game_importance_score
+ comeback_win
+ rivalry
+ revenge_match
+ redemption_game
+ highlight_match (default False)
+ event_name
 
-did_play → True/False based on stats row existing.
-injured → manually set; True for missed games (esp. during non-sophomore years).
-forfeited → if opponent forfeited (you mentioned NA in result).
-played_all_sets → sets_played == set_count
-is_repeat_opponent → if faced the same opponent more than once in the same season
-milestone_flag → values like:
-'first_match'
-'first_tournament'
-'100th_kill'
-'last_match'
-🏷️ Match Context Tags:
+🧮 Match Timeline + Scheduling
+ match_index → (via career_match_index)
+ season_match_number
+ week_of_season
+ days_since_last_match
+ is_back_to_back
+ match_density_3days
+ multi_game_day
+ first_match_of_day
+ last_match_of_day
+ match_no
+ total_matches_that_day
+ same_day_opponent_seq
+ season_stage 
+ total_sets_that_day
+ team_needed_win
+ confidence_boost_game
+ momentum_swing
 
-match_type → one of:
-'regular', 'tournament_pool', 'tournament_bracket', 'playoff', 'championship', 'forfeit', 'injured'
-game_importance → categorical: 'low', 'normal', 'high'
-game_importance_score → numeric: 0 (regular), 1 (tournament), 2 (playoffs), maybe 3 (championship)?
-highlight_match → is_highlight, default to False, you edit manually
-comeback_win → lost 1st set but won match
-rivalry → set manually (optional: you can specify list later)
-📊 Stats-Based Calculations:
+🎂 Date & Opponent Details
+ birthday_match
+ opponent_slug
+ deaf_school 
+ total_points_for, total_points_against → requires parsing set scores
 
-personal_performance_score → weighted:
-= (kills * 1.5 + assists * 1.2 + aces * 1.0 + digs * 0.8 + blocks * 1.3 - kill_err * 0.5 - serve_err * 0.4)
-personal_performance_per_set → score ÷ sets played
-🧮 Match Context / Timeline Features:
+📊 Stats-Based Calculations (needs stats merge)
+ did_play
+ played_all_sets
+ personal_performance_score
+ personal_performance_per_set
+ season_avg_performance_score
+ season_performance_percentile
+ below_avg_performance
+ performance_trend
+ form_trend_label
+ offensive_focus_score
+ defensive_impact_score
+ efficiency_score
+ zero_stat_match
+ best_match_of_season
+ clutch_factor
+ vs_last_time_same_opponent
+ game_rating
+ offense_dominant_match
+ defense_dominant_match
+ balanced_match
+ low_error_game
 
-match_index → per season (you already have this)
-career_match_index → overall running index
-week_of_season → week number (offset from first match)
-season_stage → early / mid / late based on match index
-win_streak / loss_streak → rolling counts
-days_since_last_match → from previous match
-fatigue_factor → sets played the day before / 5.0
-🎂 Date & Opponent Details:
+🏅 Career & Narrative
+ career_match_index
+ career_stage
+ milestone_flag
+ match_key
+ result, set_scores, set_result, set_count, set_diff
+ was_set_swept
+ swept_opponent
+ deciding_set_played
 
-birthday_match → if match falls on 10-03
-opponent_category → One of:
-'conference', 'deaf school', 'private', 'public', 'out of state', 'unknown'
-total_points_for / total_points_against → from set_scores (sum of your/team points vs opponent)
+📣 Storyline Tags
+ revenge_match
+ redemption_game
+ highlight_match
+ momentum_swing
+ confidence_boost_game
+ clutch_performance_flag → needs stats
+ heartbreaker → needs performance + close loss detection
+ dominant_sweep → needs stats
+ record_breaker_flag → needs cumulative stats
+ season_highs_flags → needs per-season stats
 
-💥 Performance Dynamics
-best_match_of_season: Boolean flag — your highest personal_performance_score in that season.
-season_performance_percentile: Rank each match by percentile of your performance within the season (helps ID "top 10%" games).
-clutch_factor: Combine personal_performance_score * game_importance_score — shows how well you performed in big games.
-📉 Consistency + Slumps
-below_avg_performance: Flag if your score is >1 std dev below your season average.
-performance_trend: Add a rolling average of performance over last 3 matches — could be useful for visualizing form.
-📆 Match Frequency Context
-is_back_to_back: True if played the day after another match.
-multi_game_day: Flag if multiple matches happened on the same date (useful for tournaments).
-first_match_of_day / last_match_of_day if more than one on the same date.
-🧠 Psychology / Emotion-Inspired
-revenge_match: Faced a team you lost to earlier that season.
-confidence_boost_game: After a losing streak, this match started a winning streak.
-🏅 Career Milestone Bonus Tags (more granular)
-first_kill, first_ace, first_blk → might be available if you want to track raw accumulation.
-season_total_kills (after aggregation) → so each row shows your cumulative kills up to that point.
+🎮 Fun/Sim Tags
+ game_rating
+ energy_boost_game
+ high_impact_win
 
-🎯 Match Role & Situation
-was_set_swept: True if you lost in straight sets (e.g. 0–2, 0–3).
-swept_opponent: True if you won in straight sets.
-deciding_set_played: Flag if the match went to final deciding set (e.g. 5th in best-of-5 or 3rd in best-of-3). (this has to be manual because some tournaments had weird formats)
-total_sets_that_day: Aggregate number of sets played on that day (sum across matches with same date).
-match_order_that_day: If multiple matches on same day, track if it was 1st, 2nd, etc.
-match_density_3days: Number of matches played in last 3 days — good proxy for tight scheduling.
+🧠 Opponent Prediction & Categorization
+ predictable_match
+ upset_victory
+ opponent_strength_tier
 
-🔧 Performance Variants
-offensive_focus_score: kills + aces + hit_pct + serve_pct
-(emphasizes offensive load even if assists/digs aren't high).
-defensive_impact_score: digs + total_blks + receiving
-(separate from your offensive rating).
-efficiency_score:
-Normalize performance per attack/serve attempts to see how efficient you were.
-zero_stat_match: True if all stat categories (kills, digs, etc.) are 0 — useful for DNP detection.
-
-🧱 Team Context (Optional if data exists or can be faked)
-team_needed_win: After 2+ losses, this match could’ve been important to bounce back.
-high_margin_win: Team won with margin_pct > 0.6.
-low_margin_loss: Lost by only 1 set or margin_pct < 0.1.
-
-🧠 Cognitive Tags
-opponent_strength_tier: If available, rate opponents as "high/mid/low" strength based on your win/loss history against them or external source (like MaxPreps rank).
-predictable_match: Win/loss outcome matches historical performance vs opponent.
-upset_victory: Win against a team you previously lost to or a high-tier team.
-
-🏆 Career Progression
-career_stage: Based on match_index or year (e.g. "early career", "peak", "final season").
-season_match_number: Match # in that season (already planned, but callout here for clarity).
-was_senior_game: Final match of your career — maybe flag for extra sentiment.
-
-🔄 Temporal + Historical Comparisons
-season_avg_performance_score → attach rolling season average per match (good for "above/below avg" context).
-vs_last_time_same_opponent → track if your performance improved or worsened from previous meeting with that team.
-form_trend_label → tag match as "rising", "plateau", "decline" based on performance trend slope.
-
-🪄 Contextual Superlatives
-season_highs_flags:
-most_kills_this_season
-most_aces_this_season
-most_blocks_this_season
-(auto True if current value == season max)
-record_breaker_flag → if you beat a personal best from any previous season
-
-📣 Narrative Markers (for storytelling)
-redemption_game → you played this team last season and lost, now you won.
-clutch_performance_flag → big game (playoff/high importance) + high performance score (e.g. top 10%).
-heartbreaker → high performance but close loss (e.g. margin_pct < 0.1, score > season average)
-dominant_sweep → swept opponent + performance score in top 25%
-momentum_swing → game that turned a losing streak into a winning streak
+🧱 Team Dynamics
+ team_needed_win
+ high_margin_win → *requires margin %
+ low_margin_loss → *requires margin %
 
 🧬 Skill Profile Analysis
-Helps with scouting yourself:
-
-offense_dominant_match → kills + aces contribute > 65% of your performance score.
-defense_dominant_match → digs + blocks contribute > 65%.
-balanced_match → No single stat group (offense, defense, service) > 50% of score.
-low_error_game → combined kill_err + serve_err is below season median
-
-🎮 “Sim-like” Potential Tags (for fun)
-game_rating: Normalize performance to 0–100 scale (could mix performance + importance + result)
-energy_boost_game: After match with fatigue_factor ≥ 0.8 → you still performed above avg
-high_impact_win: Game you won with high personal performance and low margin (you were the difference-maker)
-
-📚 Dataset Organization Helpers
-data_quality_flag → “missing_stats”, “incomplete_sets”, “ambiguous_opponent” → for future cleaning awareness
+ offense_dominant_match
+ defense_dominant_match
+ balanced_match
+ low_error_game
