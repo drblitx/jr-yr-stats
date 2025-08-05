@@ -112,7 +112,7 @@ if len(unmapped) > 0:
 # forfeited, out sick, out injured matches
 forfeited_matches = [
     ("2016-09-24", "Connelly School of the Holy Child"),
-    ("2019-10-21", "Roosevelt")]
+    ("2019-10-21", "McLean")]
 sick_dates = pd.to_datetime(['2016-09-27', '2017-09-18'])
 injured_dates = pd.to_datetime(['2017-11-07', '2017-11-08'])
 
