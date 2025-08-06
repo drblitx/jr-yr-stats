@@ -70,6 +70,7 @@ opponent_slug_map = {
     "McLean": "MCLEAN",
     "Mississippi School for the Deaf": "MISD",
     "Mount Airy Christian Academy": "MACA",
+    "New Life Christian School": "NL",
     "Oakcrest": "OAKCREST",
     "Pallotti": "PALLOTTI",
     "Parkside": "PARKSIDE",
