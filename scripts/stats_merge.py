@@ -118,16 +118,45 @@ def format_date(date_str, year):
 def get_opponent_slug(opponent):
     return opponent_slug_map.get(opponent, re.sub(r'[^A-Z]', '', opponent.upper())[:3])
 
+SCHEDULE_CLEANED_PATH = os.path.join("data/cleaned", "cleaned_master_schedule.csv")
+
+if os.path.exists(SCHEDULE_CLEANED_PATH):
+    schedule_df = pd.read_csv(SCHEDULE_CLEANED_PATH)
+    schedule_df["date"] = schedule_df["date"].astype(str)
+    schedule_df["opponent"] = schedule_df["opponent"].apply(clean_opponent_name)
+    schedule_match_keys = schedule_df[["season", "date", "opponent", "match_key", "opponent_slug"]].copy()
+else:
+    print(f"WARNING: {SCHEDULE_CLEANED_PATH} not found. Match key merge will fallback.")
+    schedule_match_keys = pd.DataFrame()
+
 def preprocess_stat_df(df, year, season_code, fill_zero=False):
     df = df.copy()
+    df['season'] = season_code
     df['opponent'] = df['opponent'].apply(clean_opponent_name)
     df['date'] = df['date'].apply(lambda d: format_date(d, year))
-    df['opponent_slug'] = df['opponent'].apply(get_opponent_slug)
-    df['match_key'] = df.apply(lambda row: f"{season_code}_{row['date'][5:]}_{row['opponent_slug']}_1", axis=1)
-    df['season'] = season_code
+
+    schedule_match_keys = schedule_df[["season", "date", "opponent", "match_key", "opponent_slug"]]
+    df = df.merge(schedule_match_keys, on=["season", "date", "opponent"], how="left", suffixes=('', '_schedule'))
+
+    df["opponent_slug"] = df["opponent_slug"].fillna(df["opponent"].apply(get_opponent_slug))
+    df["opponent_slug"] = df["opponent_slug"].astype(str)
+
+    missing_keys = df["match_key"].isna()
+    if missing_keys.any():
+        print(f"WARNING: {missing_keys.sum()} match_keys missing — falling back to auto-generation.")
+        fallback_keys = (
+            df.loc[missing_keys, "season"].astype(str)
+            + "_" + df.loc[missing_keys, "date"].dt.strftime("%m-%d")
+            + "_" + df.loc[missing_keys, "opponent_slug"].str.replace(r'\W+', '', regex=True)
+            + "_" + df.loc[missing_keys].groupby(["date", "opponent"]).cumcount().add(1).astype(str)
+        )
+        df.loc[missing_keys, "match_key"] = fallback_keys
+
     if fill_zero:
-        stat_cols = [col for col in df.columns if col not in ["date", "opponent", "result", "sets_played", "match_key", "season", "opponent_slug"]]
+        meta_cols = ["date", "opponent", "result", "sets_played", "match_key", "season", "opponent_slug"]
+        stat_cols = [col for col in df.columns if col not in meta_cols]
         df[stat_cols] = df[stat_cols].fillna(0)
+
     return df
 
 def suffix_stat_columns(df, stat_category):
@@ -248,7 +277,10 @@ def merge_stats():
         print(f"ADDED {len(dnp_df)} dnp placeholder rows")
 
         # sort by season then date
-        master_df = master_df.sort_values(by=["season", "date"]).reset_index(drop=True)
+        SEASON_SORT_ORDER = {"FR": 1, "SO": 2, "JR": 3, "SR": 4}
+        master_df["season_order"] = master_df["season"].map(SEASON_SORT_ORDER)
+        master_df = master_df.sort_values(by=["season_order", "date"]).reset_index(drop=True)
+        master_df = master_df.drop(columns=["season_order"])
 
         # drop schedule metadata columns that will come from schedule master
         schedule_cols_to_drop = {
@@ -263,6 +295,8 @@ def merge_stats():
         stat_cols = sorted([col for col in master_df.columns if col not in fixed_order])
         final_cols = fixed_order + stat_cols
         master_df = master_df[final_cols]
+
+        master_df = master_df.drop_duplicates(subset="match_key", keep="first")
 
         master_path = os.path.join(OUTPUT_DIR, "all_stats_merged.csv")
         master_df.to_csv(master_path, index=False)
