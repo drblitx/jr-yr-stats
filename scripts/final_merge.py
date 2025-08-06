@@ -171,7 +171,7 @@ if __name__ == "__main__":
         "result", "set_scores", "set_result", "set_count", "set_diff",
         "comeback_win", "revenge_match", "redemption_game",
         "total_points_for", "total_points_against", "margin_pct", "high_margin_win", "low_margin_loss",
-        "location", "injured", "sick", "forfeited", "favorite_match", "birthday_match", "highlight_match",
+        "location", "injured", "sick", "forfeited", "did_play", "favorite_match", "birthday_match", "highlight_match",
         "is_conference", "is_playoffs", "is_tournament", "is_championship"
     ]
 

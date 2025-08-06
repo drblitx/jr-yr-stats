@@ -285,6 +285,8 @@ df = df.merge(
     how="left"
 )
 
+df["did_play"] = df["career_match_index"].notna()
+
 df.drop(columns=["counted_for_career_index"], inplace=True)
 
 df["career_match_index"] = df["career_match_index"].astype("Int64")
@@ -499,6 +501,7 @@ desired_order = [
     "injured",
     "sick",
     "forfeited",
+    "did_play",
     "favorite_match",
     "birthday_match",
     "highlight_match",
