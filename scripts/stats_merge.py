@@ -95,8 +95,15 @@ def create_junior_stat_rows_from_schedule():
     schedule_df['opponent'] = schedule_df['opponent'].apply(clean_opponent_name)
     schedule_df['date'] = schedule_df['date'].apply(lambda d: format_date(d, year))
     schedule_df['opponent_slug'] = schedule_df['opponent'].apply(get_opponent_slug)
-    schedule_df['match_key'] = schedule_df.apply(lambda row: f"{season_code}_{row['date'][5:]}_{row['opponent_slug']}_1", axis=1)
     schedule_df['season'] = season_code
+
+    schedule_df["match_no"] = schedule_df.groupby("date").cumcount() + 1
+    schedule_df["match_key"] = (
+        schedule_df["season"]
+        + "_" + schedule_df["date"].str[5:]
+        + "_" + schedule_df["opponent_slug"].str.replace(r'\W+', '', regex=True)
+        + "_" + schedule_df["match_no"].astype(str)
+    )
 
     schedule_df['result'] = pd.NA
     schedule_df['sets_played'] = pd.NA
@@ -131,26 +138,38 @@ else:
 
 def preprocess_stat_df(df, year, season_code, fill_zero=False):
     df = df.copy()
-    df['season'] = season_code
-    df['opponent'] = df['opponent'].apply(clean_opponent_name)
-    df['date'] = df['date'].apply(lambda d: format_date(d, year))
+    df["season"] = season_code
+    df["opponent"] = df["opponent"].apply(clean_opponent_name)
+    df["date"] = df["date"].apply(lambda d: format_date(d, year))
 
-    schedule_match_keys = schedule_df[["season", "date", "opponent", "match_key", "opponent_slug"]]
-    df = df.merge(schedule_match_keys, on=["season", "date", "opponent"], how="left", suffixes=('', '_schedule'))
+    df = df.merge(
+        schedule_match_keys,
+        on=["season", "date", "opponent"],
+        how="left",
+        suffixes=("", "_schedule")
+    )
 
-    df["opponent_slug"] = df["opponent_slug"].fillna(df["opponent"].apply(get_opponent_slug))
-    df["opponent_slug"] = df["opponent_slug"].astype(str)
+    # if opponent_slug is missing, generate from scratch
+    df["opponent_slug"] = df["opponent_slug"].fillna(df["opponent"].apply(get_opponent_slug)).astype(str)
 
+    # helper columns for fallback match key generation
+    df["match_no"] = df.groupby("date").cumcount() + 1
+    df["total_matches_that_day"] = df.groupby("date")["date"].transform("count")
+    df["same_day_opponent_seq"] = df.groupby(["date", "opponent"]).cumcount() + 1
+    df["season_opponent_seq"] = df.groupby(["season", "opponent"]).cumcount() + 1
+    df["is_repeat_opponent"] = df["season_opponent_seq"] > 1
+
+    # fill match_key only if it's missing (e.g. not found in schedule)
     missing_keys = df["match_key"].isna()
     if missing_keys.any():
         print(f"WARNING: {missing_keys.sum()} match_keys missing — falling back to auto-generation.")
-        fallback_keys = (
+        df["match_no"] = df.groupby("date").cumcount() + 1
+        df.loc[missing_keys, "match_key"] = (
             df.loc[missing_keys, "season"].astype(str)
-            + "_" + df.loc[missing_keys, "date"].dt.strftime("%m-%d")
+            + "_" + df.loc[missing_keys, "date"].str[5:]
             + "_" + df.loc[missing_keys, "opponent_slug"].str.replace(r'\W+', '', regex=True)
-            + "_" + df.loc[missing_keys].groupby(["date", "opponent"]).cumcount().add(1).astype(str)
+            + "_" + df.loc[missing_keys, "match_no"].astype(str)
         )
-        df.loc[missing_keys, "match_key"] = fallback_keys
 
     if fill_zero:
         meta_cols = ["date", "opponent", "result", "sets_played", "match_key", "season", "opponent_slug"]
