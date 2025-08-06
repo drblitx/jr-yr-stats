@@ -1,7 +1,3 @@
-I did start, but it got pretty messy in the merging of things, so can we start "over" in terms of setting things up cleanly 
-so I can merge things clearly and without issues (as there are several occurrences where I will play against the same team 
-twice on the same day which could cause joining errors)
-
 I'm building a personal data project analyzing my performance in high school volleyball across three seasons:
 Freshman (2016), Sophomore (2017), Senior (2019)
 Then uses these analyses to predict what my stats would have been match-by-match and season during my junior year

@@ -140,4 +140,60 @@ if __name__ == "__main__":
         exit(1)
 
     print("\n🎯 All checks passed. Proceeding to final merge...")
-    # merge logic can go here
+    
+    print("\nMerging schedule and stats...")
+
+    # drop duplicate stat columns that exist in schedule
+    merged_df = schedule_df.merge(stats_df, on="match_key", how="left")
+
+    redundant_cols = ["date_y", "opponent_y", "season_y", "result_y", "sets_played_y"]
+    merged_df = merged_df.drop(columns=[col for col in redundant_cols if col in merged_df.columns], errors="ignore")
+
+    # rename cleanly if needed
+    merged_df = merged_df.rename(columns={
+        "date_x": "date",
+        "opponent_x": "opponent",
+        "season_x": "season",
+        "result_x": "result",
+        "sets_played_x": "sets_played"
+    })
+
+    if "career_match_index" in merged_df.columns:
+        merged_df["career_match_index"] = merged_df["career_match_index"].astype("Int64")
+
+    # reorder columns for readability
+    core_order = [
+        "match_key", "career_match_index", "career_stage", "season", "season_match_number", "season_stage",
+        "date", "day_of_week", "week_of_season", "days_since_last_match", "is_back_to_back", "match_density_3days",
+        "match_no", "total_matches_that_day", "multi_game_day", "first_match_of_day", "last_match_of_day", "same_day_opponent_seq",
+        "opponent", "opponent_slug", "season_opponent_seq", "is_repeat_opponent", "rivalry", "deaf_school",
+        "match_type", "game_importance", "game_importance_score", "event_name", "milestone_flag",
+        "result", "set_scores", "set_result", "set_count", "set_diff",
+        "comeback_win", "revenge_match", "redemption_game",
+        "total_points_for", "total_points_against", "margin_pct", "high_margin_win", "low_margin_loss",
+        "location", "injured", "sick", "forfeited", "favorite_match", "birthday_match", "highlight_match",
+        "is_conference", "is_playoffs", "is_tournament", "is_championship"
+    ]
+
+    stat_cols = [
+        "sets_played", "kills_attacking", "kills_per_set_attacking", "kill_pct_attacking",
+        "kill_att_attacking", "kill_err_attacking", "hit_pct_attacking",
+        "assists_ball_handling", "assists_per_set_ball_handling", "ball_handling_att_ball_handling", "ball_handling_err_ball_handling",
+        "solo_blks_blocking", "assisted_blks_blocking", "total_blks_blocking", "blks_per_set_blocking", "blk_err_blocking",
+        "digs_digging", "dig_err_digging", "digs_per_set_digging",
+        "receiving_serve_receiving", "receiving_err_serve_receiving", "receiving_per_set_serve_receiving",
+        "aces_serving", "aces_per_set_serving", "ace_pct_serving", 
+        "serve_att_serving", "serve_err_serving", "serve_pct_serving", "points_serving"
+    ]
+
+    remaining = [col for col in merged_df.columns if col not in core_order + stat_cols + ["maxpreps"]]
+
+    final_order = core_order + stat_cols + remaining + ["maxpreps"]
+
+    merged_df = merged_df[[col for col in final_order if col in merged_df.columns]]
+
+    print(f"✅ Merged dataset: {len(merged_df)} matches, {merged_df.shape[1]} columns")
+
+    merged_path = "data/full_merged_dataset.csv"
+    merged_df.to_csv(merged_path, index=False)
+    print(f"📦 Saved: {merged_path}")

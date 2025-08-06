@@ -115,7 +115,7 @@ forfeited_matches = [
     ("2016-09-24", "Connelly School of the Holy Child"),
     ("2019-10-21", "McLean")]
 sick_dates = pd.to_datetime(['2016-09-27', '2017-09-18'])
-injured_dates = pd.to_datetime(['2017-11-07', '2017-11-08'])
+injured_dates = pd.to_datetime(['2017-11-07', '2017-11-08', '2018-09-27'])
 
 df["forfeited"] = df.apply(
     lambda row: (row["date"].strftime("%Y-%m-%d"), row["opponent"]) in forfeited_matches,
@@ -270,8 +270,24 @@ df["favorite_match"] = False
 df["birthday_match"] = df["date"].dt.strftime("%m-%d") == "09-21"
 
 # career match index
-df = df.sort_values(by="date").reset_index(drop=True)
-df["career_match_index"] = df.index + 1
+df["counted_for_career_index"] = ~df["forfeited"] & ~df["injured"] & ~df["sick"]
+
+# special case override: 9/27/2018 match
+df.loc[df["match_key"] == "JR_09-27_BOHS_1", "counted_for_career_index"] = True
+
+# assign career index only to played matches
+played_matches = df[df["counted_for_career_index"]].sort_values("date").copy()
+played_matches["career_match_index"] = range(1, len(played_matches) + 1)
+
+df = df.merge(
+    played_matches[["match_key", "career_match_index"]],
+    on="match_key",
+    how="left"
+)
+
+df.drop(columns=["counted_for_career_index"], inplace=True)
+
+df["career_match_index"] = df["career_match_index"].astype("Int64")
 
 # season match #
 df["season_match_number"] = df.groupby("season").cumcount() + 1
@@ -314,10 +330,10 @@ df["season_stage"] = (
 
 # career stage (25, 50, 75)
 df["career_stage"] = pd.qcut(
-    df["career_match_index"],
+    df["career_match_index"].dropna().astype(int),
     q=[0, 0.25, 0.75, 1.0],
     labels=["early", "mid", "late"]
-)
+).reindex(df.index)
 
 # multi match day
 df["multi_game_day"] = df["total_matches_that_day"] > 1
