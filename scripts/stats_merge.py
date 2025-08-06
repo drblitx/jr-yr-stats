@@ -101,20 +101,17 @@ def create_junior_stat_rows_from_schedule():
     schedule_df['result'] = pd.NA
     schedule_df['sets_played'] = pd.NA
 
-    for cat in STAT_CATEGORIES:
-        schedule_df[f"kills_{cat}"] = 0
-        schedule_df[f"assists_{cat}"] = 0
-        schedule_df[f"digs_{cat}"] = 0
-        schedule_df[f"aces_{cat}"] = 0
-
     return schedule_df
 
 def clean_opponent_name(name):
     return opponent_name_corrections.get(name, name)
 
 def format_date(date_str, year):
+    if pd.isna(date_str):
+        return None
     try:
-        return datetime.strptime(f"{year}-{date_str}", "%Y-%m/%d").strftime("%Y-%m-%d")
+        parsed = datetime.strptime(date_str.strip(), "%m/%d")
+        return parsed.replace(year=year).strftime("%Y-%m-%d")
     except ValueError:
         return None
 
@@ -187,10 +184,10 @@ def merge_stats():
                 all_columns = set().union(*(df.columns for df in all_seasons_merged))
                 for col in all_columns:
                     if col not in jr_df.columns:
-                        jr_df[col] = 0 if col.startswith((
-                            'kills_', 'assists_', 'digs_', 'aces_', 'serve_', 'receiving_', 
-                            'points_', 'blks_', 'dig_', 'hit_', 'kill_', 'ball_handling_', 'blk_'
-                        )) else pd.NA
+                        if col not in {"match_key", "date", "opponent", "season", "opponent_slug", "result"}:
+                            jr_df[col] = 0
+                        else:
+                            jr_df[col] = pd.NA
 
                 all_seasons_merged.append(jr_df)
                 print("added junior schedule-based placeholder stats")
@@ -204,7 +201,22 @@ def merge_stats():
             ("2016-09-27", "McLean", "FR"),
             ("2017-09-18", "Berman Hebrew Academy", "SO"),
             ("2017-11-07", "Bell", "SO"),
-            ("2017-11-08", "Woodrow Wilson", "SO")
+            ("2017-11-08", "Jackson-Reed", "SO")
+        ]
+
+        dnp_rows = []
+        dnp_entries = [
+            ("2016-09-24", "Connelly School of the Holy Child", "FR"),
+            ("2019-10-21", "McLean", "SR"),
+            ("2016-09-27", "McLean", "FR"),
+            ("2017-09-18", "Berman Hebrew Academy", "SO"),
+            ("2017-11-07", "Bell", "SO"),
+            ("2017-11-08", "Jackson-Reed", "SO")
+        ]
+
+        stat_columns = [
+            col for col in master_df.columns
+            if col not in {"match_key", "date", "opponent", "season", "opponent_slug", "result"}
         ]
 
         dnp_rows = []
@@ -220,16 +232,10 @@ def merge_stats():
                 "season": season_code,
                 "opponent_slug": opponent_slug,
                 "result": pd.NA,
-                "sets_played": pd.NA
             }
 
-            for cat in STAT_CATEGORIES:
-                row.update({
-                    f"kills_{cat}": pd.NA,
-                    f"assists_{cat}": pd.NA,
-                    f"digs_{cat}": pd.NA,
-                    f"aces_{cat}": pd.NA
-                })
+            for col in stat_columns:
+                row[col] = pd.NA
 
             dnp_rows.append(row)
 
@@ -257,25 +263,6 @@ def merge_stats():
         stat_cols = sorted([col for col in master_df.columns if col not in fixed_order])
         final_cols = fixed_order + stat_cols
         master_df = master_df[final_cols]
-
-        final_column_order = [
-            "match_key", "date", "result", "opponent", "sets_played",
-            "kills_attacking", "kills_per_set_attacking", "kill_pct_attacking", "kill_att_attacking",
-            "kill_err_attacking", "hit_pct_attacking", "opponent_slug", "season",
-            "assists_ball_handling", "assists_per_set_ball_handling", "ball_handling_att_ball_handling",
-            "ball_handling_err_ball_handling", "solo_blks_blocking", "assisted_blks_blocking",
-            "total_blks_blocking", "blks_per_set_blocking", "blk_err_blocking",
-            "digs_digging", "dig_err_digging", "digs_per_set_digging",
-            "receiving_serve_receiving", "receiving_err_serve_receiving", "receiving_per_set_serve_receiving",
-            "aces_serving", "aces_per_set_serving", "ace_pct_serving", "serve_att_serving",
-            "serve_err_serving", "serve_pct_serving", "points_serving"
-        ]
-
-        missing_cols = [col for col in final_column_order if col not in master_df.columns]
-        for col in missing_cols:
-            master_df[col] = pd.NA
-
-        master_df = master_df[final_column_order]
 
         master_path = os.path.join(OUTPUT_DIR, "all_stats_merged.csv")
         master_df.to_csv(master_path, index=False)
