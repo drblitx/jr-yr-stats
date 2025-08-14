@@ -1,9 +1,9 @@
 # 🏐 HS Volleyball Stats (jr-yr-stats)
 
 A personal data project analyzing my performance in high school volleyball across three seasons:
-- **Freshman (2016)**
-- **Sophomore (2017)**
-- **Senior (2019)**
+- **Freshman season (2016)**
+- **Sophomore season (2017)**
+- **Senior season (2019)** 
 
 My junior year (2018) was under-reported due to poor record-keeping. I do have the schedules and results, but not the stats; so this project uses data science to estimate what my match-by-match and season-long stats should have been based on past performance (see junior_full.csv).
 
