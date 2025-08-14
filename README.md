@@ -5,7 +5,7 @@ A personal data project analyzing my performance in high school volleyball acros
 - **Sophomore season (2017)**
 - **Senior season (2019)** 
 
-My junior year (2018) was under-reported due to poor record-keeping. I do have the schedules and results, but not the stats; so this project uses data science to estimate what my match-by-match and season-long stats should have been based on past performance (see junior_full.csv).
+My junior year season (2018) was under-reported due to poor record-keeping. I do have the schedules and results, but not the stats; so this project uses data science to estimate what my match-by-match and season-long stats should have been based on past performance (see junior_full.csv).
 
 This project compiles and cleans individual match-level statistics from each season, producing a dataset that supports deeper analysis of trends, situational performance, and match outcomes. The final merged dataset is saved as finalized_data.csv.
 
