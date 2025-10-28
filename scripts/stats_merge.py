@@ -328,12 +328,10 @@ def merge_stats():
     master_df = master_df.sort_values(by=["season_order", "date"]).drop(columns=["season_order"])
 
     final_cols = [
-        "match_key", "date", "result", "opponent", "sets_played",
+        "season", "match_key", "date", "result", "opponent", "sets_played",
 
         "kills_attacking", "kills_per_set_attacking", "kill_pct_attacking", 
         "kill_att_attacking", "kill_err_attacking", "hit_pct_attacking",
-
-        "season",
 
         "assists_ball_handling", "assists_per_set_ball_handling", 
         "ball_handling_att_ball_handling", "ball_handling_err_ball_handling",
@@ -360,7 +358,40 @@ def merge_stats():
 
     master_df = master_df.drop_duplicates(subset="match_key", keep="first")
 
-    master_path = os.path.join(OUTPUT_DIR, "all_stats_merged.csv")
+    # rename cols
+    rename_map = {
+        "kills_attacking": "kills",
+        "kills_per_set_attacking": "kills_per_set",
+        "kill_pct_attacking": "kill_pct",
+        "kill_att_attacking": "kill_attempts",
+        "kill_err_attacking": "kill_errors",
+        "hit_pct_attacking": "hit_pct",
+        "assists_ball_handling": "assists",
+        "assists_per_set_ball_handling": "assists_per_set",
+        "ball_handling_att_ball_handling": "ball_handling_attempts",
+        "ball_handling_err_ball_handling": "ball_handling_errors",
+        "solo_blks_blocking": "solo_blocks",
+        "assisted_blks_blocking": "assisted_blocks",
+        "total_blks_blocking": "total_blocks",
+        "blks_per_set_blocking": "blocks_per_set",
+        "blk_err_blocking": "block_errors",
+        "digs_digging": "digs",
+        "digs_per_set_digging": "digs_per_set",
+        "dig_err_digging": "dig_errors",
+        "receiving_serve_receiving": "receiving",
+        "receiving_err_serve_receiving": "receiving_errors",
+        "receiving_per_set_serve_receiving": "receiving_per_set",
+        "aces_serving": "aces",
+        "aces_per_set_serving": "aces_per_set",
+        "ace_pct_serving": "ace_pct",
+        "serve_att_serving": "serve_attempts",
+        "serve_err_serving": "serve_errors",
+        "serve_pct_serving": "serve_pct",
+        "points_serving": "points"
+    }
+    master_df = master_df.rename(columns=rename_map)
+
+    master_path = os.path.join(OUTPUT_DIR, "RENAMED_all_stats_merged.csv")
     master_df.to_csv(master_path, index=False)
     print(f"SAVED master file: {master_path}")
 
