@@ -7,7 +7,7 @@ import pandas as pd
 import os
 
 SCHEDULE_PATH = "data/cleaned/cleaned_master_schedule.csv"
-STATS_PATH = "data/cleaned/all_stats_merged.csv"
+STATS_PATH = "data/cleaned/NEW_all_stats_merged.csv"
 
 def load_data():
     print("Loading...")
@@ -176,14 +176,14 @@ if __name__ == "__main__":
     ]
 
     stat_cols = [
-        "sets_played", "kills_attacking", "kills_per_set_attacking", "kill_pct_attacking",
-        "kill_att_attacking", "kill_err_attacking", "hit_pct_attacking",
-        "assists_ball_handling", "assists_per_set_ball_handling", "ball_handling_att_ball_handling", "ball_handling_err_ball_handling",
-        "solo_blks_blocking", "assisted_blks_blocking", "total_blks_blocking", "blks_per_set_blocking", "blk_err_blocking",
-        "digs_digging", "dig_err_digging", "digs_per_set_digging",
-        "receiving_serve_receiving", "receiving_err_serve_receiving", "receiving_per_set_serve_receiving",
-        "aces_serving", "aces_per_set_serving", "ace_pct_serving", 
-        "serve_att_serving", "serve_err_serving", "serve_pct_serving", "points_serving"
+        "sets_played", "kills", "kills_per_set", "kill_pct",
+        "kill_attempts", "kill_errors", "hit_pct",
+        "assists", "assists_per_set", "ball_handling_attempts", "ball_handling_errors",
+        "solo_blocks", "assisted_blocks", "total_blocks", "blocks_per_set", "block_errors",
+        "digs", "dig_errors", "digs_per_set",
+        "receiving", "receiving_errors", "receiving_per_set",
+        "aces", "aces_per_set", "ace_pct", 
+        "serve_attempts", "serve_errors", "serve_pct", "points"
     ]
 
     remaining = [col for col in merged_df.columns if col not in core_order + stat_cols + ["maxpreps"]]
@@ -194,6 +194,6 @@ if __name__ == "__main__":
 
     print(f"✅ Merged dataset: {len(merged_df)} matches, {merged_df.shape[1]} columns")
 
-    merged_path = "data/full_merged_dataset.csv"
+    merged_path = "data/NEW_full_merged_dataset.csv"
     merged_df.to_csv(merged_path, index=False)
     print(f"📦 Saved: {merged_path}")

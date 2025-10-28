@@ -10,14 +10,25 @@ from scipy.stats import rankdata
 # load in full merged dataset
 df = pd.read_csv("data/full_merged_dataset.csv")
 original_cols = df.columns.tolist() 
+
+# set ordering list for correct dates
 season_order = pd.CategoricalDtype(categories=['FR','SO','JR','SR'], ordered=True)
 df['season'] = df['season'].astype(season_order)
 df = df.sort_values(['season','date','match_no'], kind='mergesort').reset_index(drop=True)
 
+# set up cols for boolean flags
 bool_cols = [
-    'did_play','is_playoffs','is_championship','is_tournament','rivalry',
-    'redemption_game','comeback_win','highlight_match','revenge_match',
-    'birthday_match','is_repeat_opponent'
+    'did_play',
+    'is_playoffs',
+    'is_championship',
+    'is_tournament',
+    'rivalry',
+    'redemption_game',
+    'comeback_win',
+    'highlight_match',
+    'revenge_match',
+    'birthday_match',
+    'is_repeat_opponent'
 ]
 for c in bool_cols:
     if c in df.columns:
@@ -62,21 +73,6 @@ def compute_performance_score(row):
 
     return score
 
-def label_form_trend(values):
-    values = list(values)  
-    if len(values) < 3:
-        return ['FLAT'] * len(values)
-    result = ['FLAT'] * len(values)
-    for i in range(2, len(values)):
-        window = values[i-2:i+1]
-        if all(x < window[-1] for x in window[:2]):
-            result[i] = 'UP'
-        elif all(x > window[-1] for x in window[:2]):
-            result[i] = 'DOWN'
-        else:
-            result[i] = 'FLAT'
-    return result
-
 def compute_percentile(group):
     return rankdata(group, method='average') / len(group) * 100  # season ranking
 
@@ -94,24 +90,6 @@ def get_career_high_flags(row):
         if pd.notna(row[field]) and row[field] == df[field].max()
     ])
 
-def label_performance(x, did_play):
-    if not did_play or pd.isna(x):
-        return ''
-    if x >= 8.5:   return 'ICONIC'
-    if x >= 7.0:   return 'MEMORABLE'
-    if x >= 5.0:   return 'SOLID'
-    return 'QUIET'
-    
-def classify_opponent_tier(row):
-    if not pd.notna(row['game_importance_score']):
-        return 'Unknown'
-    if row['game_importance_score'] >= 0.75:
-        return 'High'
-    elif row['game_importance_score'] >= 0.5:
-        return 'Medium'
-    else:
-        return 'Low'
-    
 def _streak(series, want='W'):
     out, c = [], 0
     for v in series:
@@ -153,29 +131,11 @@ df['season_avg_performance_score'] = (
     .transform('mean')
 )
 
-df['personal_performance_percentile'] = (
-    df[df['did_play'] & df['stats_available']]
-    .groupby('season', observed=False)['personal_performance_score']
-    .transform(compute_percentile)
-)
-
-
-# --------------------------------------------------------------
-# 3. match context flags
-# --------------------------------------------------------------
-df['clutch_factor'] = df['personal_performance_score'] * df['game_importance_score']
-
-df['clutch_performance_flag'] = (
-    (df['game_importance_score'] >= 0.7) &
-    (df['personal_performance_percentile'] >= 75)
-)
-
 
 # --------------------------------------------------------------
 # 4. match timeline & scheduling
 # --------------------------------------------------------------
 df['prev_result'] = df['result'].shift(1)
-df['prev_percentile'] = df['personal_performance_percentile'].shift(1)
 df['prev_win_streak']  = df['win_streak'].shift(1)
 df['prev_loss_streak'] = df['loss_streak'].shift(1)
 
@@ -199,38 +159,6 @@ df['form_trend_label'] = (
     df[df['did_play'] & df['stats_available']]
     .groupby('season', observed=False)['personal_performance_score']
     .transform(label_form_trend)
-)
-
-# efficiency score
-err_total = (
-    df['serve_err_serving'].fillna(0).astype(float) +
-    df['kill_err_attacking'].fillna(0).astype(float) +
-    df['receiving_err_serve_receiving'].fillna(0).astype(float)
-)
-valid_mask = df['did_play'] & df['stats_available']
-df.loc[valid_mask, 'efficiency_score'] = (
-    df.loc[valid_mask, 'personal_performance_score'].astype(float) / (err_total.loc[valid_mask] + 1.0)
-)
-df['efficiency_score'] = df['efficiency_score'].replace([np.inf, -np.inf], np.nan)
-
-# offensive focus score
-offensive_terms = (
-    df['kills_attacking'].fillna(0).astype(float) * 1.5 +
-    df['kill_pct_attacking'].fillna(0).astype(float) * 10.0 +
-    df['aces_serving'].fillna(0).astype(float) * 1.3 +
-    df['ace_pct_serving'].fillna(0).astype(float) * 8.0
-)
-den = df['personal_performance_score'].astype(float)
-mask_focus = valid_mask & den.notna() & (den != 0)
-df.loc[mask_focus, 'offensive_focus_score'] = offensive_terms.loc[mask_focus] / den.loc[mask_focus]
-df.loc[valid_mask & ~mask_focus, 'offensive_focus_score'] = np.nan
-
-# defensive impact score
-den_sets = df['sets_played'].astype(float)
-mask_di = df['did_play'] & df['stats_available'] & den_sets.gt(0)
-df.loc[mask_di, 'defensive_impact_score'] = (
-    (df.loc[mask_di, 'digs_digging'].fillna(0) + df.loc[mask_di, 'receiving_serve_receiving'].fillna(0))
-    / den_sets.loc[mask_di]
 )
 
 df['zero_stat_match'] = (
@@ -371,50 +299,6 @@ df['performance_brilliance_score'] = (
 )
 
 
-df['performance_label'] = df.apply(
-    lambda r: label_performance(r['performance_brilliance_score'], r['did_play']),
-    axis=1
-)
-
-raw_excitement = (
-    df['is_playoffs'].astype(int)         * w['playoffs'] +
-    df['is_championship'].astype(int)     * w['championship'] +
-    df['is_tournament'].astype(int)       * w['tournament'] +
-    df['rivalry'].astype(int)             * w['rivalry'] +
-    df['redemption_game'].astype(int)     * w['redemption'] +
-    df['revenge_match'].astype(int)       * w['revenge'] +
-    df['comeback_win'].astype(int)        * w['comeback'] +
-    df['deciding_set_played'].astype(int) * w['deciding_played'] +
-    df['deciding_set_win'].astype(int)    * w['deciding_win'] +
-    df['highlight_match'].astype(int)     * w['highlight'] +
-    df['milestone_flag'].notna().astype(int) * w['milestone'] +
-    df['birthday_match'].astype(int)      * w['birthday'] +
-    df['game_importance_score'].fillna(0) * w['importance'] +
-    tight_sets.astype(int)                * w['tight_sets'] +
-    close_margin.astype(int)              * w['close_margin']
-)
-
-max_excitement = sum(w.values())
-df['fan_excitement'] = (raw_excitement / max_excitement * 10).clip(0, 10).round(1)
-
-
-# --------------------------------------------------------------
-# 9. opponent categorization & simulation tags
-# --------------------------------------------------------------
-df['opponent_strength_tier'] = df.apply(classify_opponent_tier, axis=1)
-
-df['upset_victory'] = (
-    (df['result'] == 'W') &
-    (df['opponent_strength_tier'] == 'High') &
-    (df['personal_performance_percentile'] < 50)
-)
-
-df['predictable_match'] = (  # repeat opponent + similar margin trend
-    df['is_repeat_opponent'] &
-    (df['margin_pct'].abs() <= 0.1)  # close match again
-)
-
-
 # --------------------------------------------------------------
 # 10. team dynamics tags
 # --------------------------------------------------------------
@@ -460,41 +344,6 @@ df['low_error_game'] = (
 # --------------------------------------------------------------
 # save to CSV
 # --------------------------------------------------------------
-# rounding numbers so no LONG floats
-adv_round_map = {
-    'personal_performance_score': 1,
-    'personal_performance_percentile': 1,
-    'personal_performance_per_set': 2,
-    'season_avg_performance_score': 2,
-    'clutch_factor': 2,
-    'efficiency_score': 2,
-    'offensive_focus_score': 3,
-    'defensive_impact_score': 2,
-    'game_rating': 2,
-    'performance_brilliance_score': 1,
-    'fan_excitement': 1,
-    'margin_pct': 3
-}
-
-adv_round_map.update({
-    'personal_performance_score_norm100': 1,
-    'personal_performance_per_set_norm100': 1,
-    'season_avg_performance_score_norm100': 1,
-    'performance_brilliance_score_norm100': 1,
-
-    'personal_performance_score_norm01': 3,
-    'personal_performance_per_set_norm01': 3,
-    'season_avg_performance_score_norm01': 3,
-    'performance_brilliance_score_norm01': 3,
-
-    'personal_performance_percentile_norm01': 3,
-    'prev_percentile': 3,
-})
-
-for col, nd in adv_round_map.items():
-    if col in df.columns:
-        df[col] = pd.to_numeric(df[col], errors='coerce').round(nd)
-
 col_order = [
     # --- match info ---
     "match_key", "career_match_index", "career_stage", "season",
