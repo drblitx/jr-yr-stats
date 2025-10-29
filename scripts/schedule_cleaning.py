@@ -396,6 +396,7 @@ df["loss_streak"] = streaks_loss
 
 # psychological
 df["team_needed_win"] = df["loss_streak"] >= 2
+
 df["confidence_boost_game"] = (
     (df["loss_streak"] >= 2) &
     (df["result"] == "W")
