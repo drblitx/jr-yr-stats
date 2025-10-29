@@ -114,27 +114,4 @@ The full merged dataset contains these fields -- some are computed, some are man
 - `highlight_match`
 - `maxpreps`
 
----
-
-## 📊 Key Columns in `finalized_data.csv`
-- `date`: Match date (YYYY-MM-DD)
-- `match_number`: Order of the match on that day
-- `match_id`: Unique identifier (season + date + match number)
-- `match_index`: Match number within the season
-- `career_match_index`: Match number across all seasons
-- `season_label`: e.g., freshman, sophomore, senior
-- `season_year`: Numeric year of the season
-- `result`: W (win), L (loss), or T (tie)
-- `set_result`: Final set score (e.g., 2-1, 0-2)
-- `set_diff`: Difference in sets won vs lost
-- `set_count`: Total sets played
-- `margin_pct`: Set margin divided by total sets
-- `numeric_result`: +1 for win, -1 for loss, 0 for tie
-- `opponent`: Name of opponent team
-- `weekday`: Day of week of the match
-- `is_duplicate_opponent_on_date`: Flag if opponent played twice in one day
-- `is_tournament`: Flag for tournament matches
-- `opponent_code`: Lowercased, underscored version of opponent name
-- `kills`, `hit_pct`, `points`, `serve_pct`, `aces`, etc.: Game performance stats
-
 If you're curious about how certain labels are generated or how performance scores are computed, dig into the notebooks or check junior_full.csv for the prediction logic.
