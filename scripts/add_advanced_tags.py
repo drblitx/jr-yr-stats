@@ -138,7 +138,7 @@ df['deciding_set_loss'] = (  # tight loss in final deciding set
 # --------------------------------------------------------------
 # narrative & rating scores
 # --------------------------------------------------------------
-tight_sets   = (df['set_diff'].abs() == 1).fillna(False)
+tight_sets = (df['set_diff'].abs() == 1).fillna(False)
 close_margin = (df['margin_pct'].abs() <= 0.12).fillna(False)
 
 
